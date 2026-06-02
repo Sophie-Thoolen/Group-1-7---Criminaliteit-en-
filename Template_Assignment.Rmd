@@ -22,8 +22,8 @@ require(yaml)
 # Title Page
 
 Include your names
-
-Include the tutorial group number
+Sterre de Groot, Benthe Tromp, Lars van der Duin, Sophie Thoolen en Roos Bakker 
+Include the tutorial group number 7
 
 Include your tutorial lecturer's name
 - Chantal
