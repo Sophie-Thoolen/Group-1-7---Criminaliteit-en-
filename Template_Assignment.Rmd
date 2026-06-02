@@ -26,6 +26,7 @@ Include your names
 Include the tutorial group number
 
 Include your tutorial lecturer's name
+- Chantal
 
 # Part 1 - Identify a Social Problem
 
