@@ -30,7 +30,7 @@ Include your tutorial lecturer's name
 - Chantal Schouwenaar
 
 # Part 1 - Identify a Social Problem
-"Dutch municipalities with higer income inequality have a higher number of recorded violent crimes per 1,000 inhabitants"
+"Dutch municipalities with higher income inequality have a higher number of recorded violent crimes per 1,000 inhabitants"
 
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
