@@ -52,6 +52,7 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 
 ```{r loading_data}
 dataset <- midwest
+vermogen <- read_csv("data/Vermogen_van_huishoudens__huishoudenskenmerken__regio__indeling_2025__02062026_150256.csv")
 ```
 
 midwest is an example dataset included in the tidyverse package
