@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 # Set-up your environment
-hjkjh
+
 ```{r package_install, include=FALSE}
 install.packages("tidyverse")
 install.packages("yaml")
@@ -18,7 +18,7 @@ require(tidyverse)
 require(rmarkdown)
 require(yaml)
 ```
-fjsdljfsdkl
+
 # Title Page
 
 Include your names
@@ -30,6 +30,7 @@ Include your tutorial lecturer's name
 - Chantal Schouwenaar
 
 # Part 1 - Identify a Social Problem
+"Dutch municipalities with higer income inequality have a higher number of recorded violent crimes per 1,000 inhabitants"
 
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
@@ -46,6 +47,8 @@ Include the following:
 ## 2.1 Load in the data
 
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
+
+...
 
 ```{r loading_data}
 dataset <- midwest
