@@ -54,11 +54,6 @@ vermogen <- read_delim("data/Vermogen_huishoudens.csv",      delim = ";", escape
 ```
 
 
-```{r loading_data}
-#dataset <- midwest
-#vermogen <- read_csv("data/Vermogen_huishoudens.csv")
-```
-
 midwest is an example dataset included in the tidyverse package
 
 ## 2.2 Provide a short summary of the dataset(s)
