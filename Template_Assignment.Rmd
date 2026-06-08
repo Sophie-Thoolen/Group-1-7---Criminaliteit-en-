@@ -76,7 +76,14 @@ vermogen_2023 <- read_delim("data/vermogen_2023.csv",
     skip = 5)
 View(vermogen_2023)
 
+library(readr)
+vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+    skip = 5)
+View(vermogen_2022) 
+
 ```
+
 
 
 ```{r}
