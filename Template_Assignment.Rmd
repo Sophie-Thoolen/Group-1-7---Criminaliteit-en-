@@ -55,23 +55,27 @@ vermogen <- read_delim("data/Vermogen_huishoudens.csv",      delim = ";", escape
 ###misdrijven
 ```{r}
 library(readr)
- Geregistreerde_misdrijven_en_aangiften_soort_misdrijf_gemeente_2026_03062026_142614 <- read_delim("data/Geregistreerde_misdrijven_en_aangiften__soort_misdrijf__gemeente_2026_03062026_142614.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
+ Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
+ 
+ library(readr)
+misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE)
+View(misdrijven_2022_2023)
 ```
 
 
-midwest is an example dataset included in the tidyverse package
+```{r}
+
+
+#midwest is an example dataset included in the tidyverse package
 
 ## 2.2 Provide a short summary of the dataset(s)
 
-```{r}
+
 head(dataset)
 ```
 
 In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
-
-``` r
-inline_code = TRUE
-```
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
