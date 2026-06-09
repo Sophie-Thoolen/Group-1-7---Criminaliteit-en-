@@ -49,10 +49,9 @@ Include the following:
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 ### vermogen
 ```{r}
-library(readr)
-vermogen <- read_delim("data/Vermogen_huishoudens.csv",      delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 5)
+
 ```
-###misdrijven
+###datasets
 ```{r}
 library(readr)
 Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
@@ -84,6 +83,36 @@ View(vermogen_2022)
 
 ```
 
+```{r}
+library(readr)
+vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+    skip = 5)
+#View(vermogen_2022) 
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+vermogen_2022 <- vermogen_2022 %>%
+  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
+
+
+df_clean <- vermogen_2022 %>%
+  mutate(`mld euro` = na_if(`mld euro`, "."),
+         `x 1 000` = na_if(`x 1 000`, "."),
+         `%` = na_if(`%`, "."),
+         `mld euro` = na_if(`mld euro`, "."))
+
+
+
+View(df_clean)
+
+
+
+#%>%
+#  filter(!is.na(vermogen_2022)) %>%
+#  filter(vermogen_2022 != 0)
+```
 
 
 ```{r}
