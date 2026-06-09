@@ -82,7 +82,8 @@ vermogen_2022 <- read_delim("data/vermogen_2022.csv",
 View(vermogen_2022) 
 
 ```
-
+#Gecleande versies 
+##2022 Vermogen clean
 ```{r}
 library(readr)
 vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
@@ -115,7 +116,36 @@ View(vermogen_2022_clean)
 #  filter(!is.na(vermogen_2022)) %>%
 #  filter(vermogen_2022 != 0)
 ```
-## Vermogen 2023
+## 2023 Vermogen
+```{r}
+library(readr)
+vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+    skip = 5)
+#View(vermogen_2023) 
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+vermogen_2023 <- vermogen_2023 %>%
+  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
+
+
+vermogen_2023clean <- vermogen_2023 %>%
+  mutate(`mld euro` = na_if(`mld euro`, "."),
+         `x 1 000` = na_if(`x 1 000`, "."),
+         `%` = na_if(`%`, "."),
+         `mld euro` = na_if(`mld euro`, "."),
+         `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
+         `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
+
+
+
+View(vermogen_2023clean)
+```
+
+```{r}
+```{r}
 ```{r}
 library(readr)
 vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
@@ -142,6 +172,7 @@ df_clean <- vermogen_2023 %>%
 
 View(df_clean)
 ```
+<<<<<<< HEAD
 ## misdrijven 2022_2023
 ```{r}
 library(readr)
@@ -149,10 +180,20 @@ misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv",
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
 #View(misdrijven_2022_2023) 
+=======
+##2024 Vermogen
+```{r}
+library(readr)
+X_Vermogen_huishoudens_2024 <- read_delim("data/ Vermogen_huishoudens_2024.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+    skip = 5)
+View(X_Vermogen_huishoudens_2024)
+>>>>>>> 1a035b6eb095633b6bda69e87b78d8f58aa5e323
 
 #install.packages("tidyverse")
 library(tidyverse)
 
+<<<<<<< HEAD
 
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
   mutate(Geregistreerde_misdrijven_2022 = na_if(aantal...2, "."),
@@ -167,6 +208,26 @@ View(misdrijven_2022_2023_clean)
 
 
 ##
+=======
+X_Vermogen_huishoudens_2024 <- X_Vermogen_huishoudens_2024 %>%
+  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
+
+
+Vermogen_2024_clean <- X_Vermogen_huishoudens_2024 %>%
+  mutate(`mld euro` = na_if(`mld euro`, "."),
+         `x 1 000` = na_if(`x 1 000`, "."),
+         `%` = na_if(`%`, "."),
+         `mld euro` = na_if(`mld euro`, "."),
+         `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
+         `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
+
+
+
+View(Vermogen_2024_clean)
+```
+
+##2024 misdrijven
+>>>>>>> 1a035b6eb095633b6bda69e87b78d8f58aa5e323
 ```{r}
 library(readr)
 Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
@@ -175,15 +236,21 @@ View(Misdrijven_2024)
 #install.packages("tidyverse")
 library(tidyverse)
 
-vermogen_2022 <- vermogen_2022 %>%
-  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
+Misdrijven_2024 <- Misdrijven_2024 %>%
+  mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
-Misdrijven_2024_clean <- vermogen_2022 %>%
-  mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, "."),
+Misdrijven_2024_clean <- Misdrijven_2024 %>%
+  mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, "."))
          
 
-View(Misdrijven_2024_clean)
+View (Misdrijven_2024_clean)
 ```
+
+
+```
+```
+
+
 
 
 ```{r}
