@@ -94,23 +94,26 @@ vermogen_2022 <- read_delim("data/vermogen_2022.csv",
 #install.packages("tidyverse")
 library(tidyverse)
 
-vermogen_2022 <- vermogen_2022 %>%
-  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
-
-
 vermogen_2022_clean <- vermogen_2022 %>%
-  mutate(`mld euro` = na_if(`mld euro`, "."),
-         `x 1 000` = na_if(`x 1 000`, "."),
-         `%` = na_if(`%`, "."),
-         `mld euro` = na_if(`mld euro`, "."),
-         `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
-         `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
-
-
+  mutate(across(everything(), ~ na_if(., "."))) %>%
+  rename(
+    regio                = `Regio's`,
+    aantal_1000          = `x 1 000`,
+    percentage           = `%`,
+    vermogen_mld         = `mld euro`,
+    vermogen_per_persoon = `1 000 euro...5`,
+    vermogen_mediaan     = `1 000 euro...6`
+  ) %>%
+  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
+                ~ as.numeric(str_replace(., ",", ".")))) %>%
+  filter(!is.na(vermogen_mld))
+ 
+glimpse(vermogen_2022_clean)
 
 View(vermogen_2022_clean)
 
-
+colnames(vermogen_2022)
+colnames(vermogen_2022_clean)
 
 #%>%
 #  filter(!is.na(vermogen_2022)) %>%
