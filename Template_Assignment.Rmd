@@ -130,7 +130,7 @@ vermogen_2023 <- vermogen_2023 %>%
   mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
 
 
-df_clean <- vermogen_2023 %>%
+vermogen_2023clean <- vermogen_2023 %>%
   mutate(`mld euro` = na_if(`mld euro`, "."),
          `x 1 000` = na_if(`x 1 000`, "."),
          `%` = na_if(`%`, "."),
@@ -140,7 +140,7 @@ df_clean <- vermogen_2023 %>%
 
 
 
-View(df_clean)
+View(vermogen_2023clean)
 ```
 
 
