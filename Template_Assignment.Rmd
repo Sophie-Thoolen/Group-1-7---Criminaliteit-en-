@@ -101,7 +101,10 @@ df_clean <- vermogen_2022 %>%
   mutate(`mld euro` = na_if(`mld euro`, "."),
          `x 1 000` = na_if(`x 1 000`, "."),
          `%` = na_if(`%`, "."),
-         `mld euro` = na_if(`mld euro`, "."))
+         `mld euro` = na_if(`mld euro`, "."),
+         `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
+         `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
+         
 
 
 
