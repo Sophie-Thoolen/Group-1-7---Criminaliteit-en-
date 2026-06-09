@@ -97,18 +97,17 @@ vermogen_2022 <- vermogen_2022 %>%
   mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
 
 
-df_clean <- vermogen_2022 %>%
+vermogen_2022_clean <- vermogen_2022 %>%
   mutate(`mld euro` = na_if(`mld euro`, "."),
          `x 1 000` = na_if(`x 1 000`, "."),
          `%` = na_if(`%`, "."),
          `mld euro` = na_if(`mld euro`, "."),
          `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
          `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
-         
 
 
 
-View(df_clean)
+View(vermogen_2022_clean)
 
 
 
@@ -116,6 +115,34 @@ View(df_clean)
 #  filter(!is.na(vermogen_2022)) %>%
 #  filter(vermogen_2022 != 0)
 ```
+## Vermogen 2023
+```{r}
+library(readr)
+vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+    skip = 5)
+#View(vermogen_2023) 
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+vermogen_2023 <- vermogen_2023 %>%
+  mutate(`mld euro` = replace(`mld euro`, `mld euro` == ".", NA))
+
+
+df_clean <- vermogen_2023 %>%
+  mutate(`mld euro` = na_if(`mld euro`, "."),
+         `x 1 000` = na_if(`x 1 000`, "."),
+         `%` = na_if(`%`, "."),
+         `mld euro` = na_if(`mld euro`, "."),
+         `1 000 euro...5` = na_if(`1 000 euro...5`, "."),
+         `1 000 euro...6` = na_if(`1 000 euro...6`, "."))
+
+
+
+View(df_clean)
+```
+
 
 
 ```{r}
