@@ -160,7 +160,8 @@ library(tidyverse)
 X_Vermogen_huishoudens_2024 <- read_delim("data/ Vermogen_huishoudens_2024.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
-View(X_Vermogen_huishoudens_2024)
+
+vermogen_2024 <- read_delim("data/ Vermogen_huishoudens_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE, skip = 5)
 
 vermogen_2024_clean <- vermogen_2024 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -172,12 +173,12 @@ vermogen_2024_clean <- vermogen_2024 %>%
     vermogen_per_persoon = `1 000 euro...5`,
     vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
-                ~ as.numeric(str_replace(., ",", ".")))) %>%
+  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan), ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
+
 glimpse(vermogen_2024_clean)
 
-View(Vermogen_2024_clean)
+View(vermogen_2024_clean)
 
 list.files("data/")
 ```
