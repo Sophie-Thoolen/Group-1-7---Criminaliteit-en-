@@ -195,13 +195,16 @@ misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv",
 library(tidyverse)
 
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
-  mutate(Geregistreerde_misdrijven_2022 = na_if(aantal...2, "."),
-         Geregistreerde_misdrijven_2023 = na_if(aantal...3, "."))
+  mutate(across(everything(), ~ na_if(., "."))) %>%
+  rename(
+    misdrijven_2022      = `Geregistreerde misdrijven...2`,
+    misdrijven_2023      = `Geregistreerde misdrijven...3`
+  ) %>%
+  mutate(across(c(misdrijven_2022, misdrijven_2023),
+                ~ as.numeric(str_replace(., ",", ".")))) %>%
+  filter(!is.na(misdrijven_2022))
 
-misdrijven_2022_2023_clean$aantal...2 <- NULL
-misdrijven_2022_2023_clean$aantal...3 <- NULL
-
-
+glimpse(misdrijven_2022_2023_clean)
 View(misdrijven_2022_2023_clean)
 ```
 
