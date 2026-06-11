@@ -197,13 +197,15 @@ library(tidyverse)
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    misdrijven_2022      = `Geregistreerde misdrijven...2`,
-    misdrijven_2023      = `Geregistreerde misdrijven...3`
-  ) %>%
+    regio           = `Regio's`,
+    misdrijven_2022 = `aantal...2`,
+    misdrijven_2023 = `aantal...3`
+  )
+  
+ misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
   mutate(across(c(misdrijven_2022, misdrijven_2023),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(misdrijven_2022))
-
+  filter(!is.na(misdrijven_2022)) 
 glimpse(misdrijven_2022_2023_clean)
 View(misdrijven_2022_2023_clean)
 ```
