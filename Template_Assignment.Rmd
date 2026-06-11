@@ -95,16 +95,16 @@ library(tidyverse)
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    regio                = `Regio's`,
-    inwoners_x1000          = `x 1 000`,
-    percentage           = `%`,
-    vermogen_mld         = `mld euro`,
-    vermogen_per_persoon = `1 000 euro...5`,
-    vermogen_mediaan     = `1 000 euro...6`
+    Gemeenten            = `Regio's`,
+    Huishoudens_x1000    = `x 1 000`,
+    Percentage           = `%`,
+    Vermogen_mld         = `mld euro`,
+    Vermogen_per_persoon = `1 000 euro...5`,
+    Vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
+  mutate(across(c(Huishoudens_x1000, Vermogen_mld, Vermogen_per_persoon, Vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(vermogen_mld))
+  filter(!is.na(Vermogen_mld))
  
 glimpse(vermogen_2022_clean)
 
@@ -136,16 +136,16 @@ vermogen_2023 <- read_delim("data/vermogen_2023.csv",
 vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    regio                = `Regio's`,
-    inwoners_x1000          = `x 1 000`,
-    percentage           = `%`,
-    vermogen_mld         = `mld euro`,
-    vermogen_per_persoon = `1 000 euro...5`,
-    vermogen_mediaan     = `1 000 euro...6`
+    Gemeenten                = `Regio's`,
+    Huishoudens_x1000          = `x 1 000`,
+    Percentage           = `%`,
+    Vermogen_mld         = `mld euro`,
+    Vermogen_per_persoon = `1 000 euro...5`,
+    Vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
+  mutate(across(c(Huishoudens_x1000, Vermogen_mld, Vermogen_per_persoon, Vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(vermogen_mld))
+  filter(!is.na(Vermogen_mld))
 
 glimpse(vermogen_2023_clean)
 
@@ -166,15 +166,15 @@ vermogen_2024 <- read_delim("data/ Vermogen_huishoudens_2024.csv", delim = ";", 
 vermogen_2024_clean <- vermogen_2024 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    regio                = `Regio's`,
-    inwoners_x1000          = `x 1 000`,
-    percentage           = `%`,
-    vermogen_mld         = `mld euro`,
-    vermogen_per_persoon = `1 000 euro...5`,
-    vermogen_mediaan     = `1 000 euro...6`
+    Gemeenten            = `Regio's`,
+    Huishoudens_x1000    = `x 1 000`,
+    Percentage           = `%`,
+    Vermogen_mld         = `mld euro`,
+    Vermogen_per_persoon = `1 000 euro...5`,
+    Vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan), ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(vermogen_mld))
+  mutate(across(c(Huishoudens_x1000, Vermogen_mld, Vermogen_per_persoon, Vermogen_mediaan), ~ as.numeric(str_replace(., ",", ".")))) %>%
+  filter(!is.na(Vermogen_mld))
 
 glimpse(vermogen_2024_clean)
 
@@ -197,15 +197,15 @@ library(tidyverse)
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    regio           = `Regio's`,
-    misdrijven_2022 = `aantal...2`,
-    misdrijven_2023 = `aantal...3`
+    Gemeenten           = `Regio's`,
+    Misdrijven_2022 = `aantal...2`,
+    Misdrijven_2023 = `aantal...3`
   )
   
  misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
-  mutate(across(c(misdrijven_2022, misdrijven_2023),
+  mutate(across(c(Misdrijven_2022, Misdrijven_2023),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(misdrijven_2022)) 
+  filter(!is.na(Misdrijven_2022)) 
 glimpse(misdrijven_2022_2023_clean)
 View(misdrijven_2022_2023_clean)
 ```
@@ -225,7 +225,7 @@ Misdrijven_2024 <- Misdrijven_2024 %>%
 Misdrijven_2024_clean <- Misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
-  rename(`Gemeentes` = `Onderwerp`)
+  rename(`Gemeenten` = `Onderwerp`)
 
 View (Misdrijven_2024_clean)
 ```
