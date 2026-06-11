@@ -96,13 +96,13 @@ vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
     regio                = `Regio's`,
-    aantal_1000          = `x 1 000`,
+    inwoners_x1000          = `x 1 000`,
     percentage           = `%`,
     vermogen_mld         = `mld euro`,
     vermogen_per_persoon = `1 000 euro...5`,
     vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
+  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
  
@@ -137,13 +137,13 @@ vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
     regio                = `Regio's`,
-    aantal_1000          = `x 1 000`,
+    inwoners_x1000          = `x 1 000`,
     percentage           = `%`,
     vermogen_mld         = `mld euro`,
     vermogen_per_persoon = `1 000 euro...5`,
     vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
+  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
 
@@ -167,13 +167,13 @@ vermogen_2024_clean <- vermogen_2024 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
     regio                = `Regio's`,
-    aantal_1000          = `x 1 000`,
+    inwoners_x1000          = `x 1 000`,
     percentage           = `%`,
     vermogen_mld         = `mld euro`,
     vermogen_per_persoon = `1 000 euro...5`,
     vermogen_mediaan     = `1 000 euro...6`
   ) %>%
-  mutate(across(c(aantal_1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan), ~ as.numeric(str_replace(., ",", ".")))) %>%
+  mutate(across(c(inwoners_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan), ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
 
 glimpse(vermogen_2024_clean)
@@ -224,7 +224,8 @@ Misdrijven_2024 <- Misdrijven_2024 %>%
 
 Misdrijven_2024_clean <- Misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
-  rename(`Misdrijven 2024` = `Geregistreerde misdrijven`)
+  rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
+  rename(`Gemeentes` = `Onderwerp`)
 
 View (Misdrijven_2024_clean)
 ```
