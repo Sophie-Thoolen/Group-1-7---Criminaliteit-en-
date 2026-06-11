@@ -1,6 +1,6 @@
 ---
-title: "De verhouding tussen criminaliteit en vemrogen per gemeente in Nederland"
-author: "Roos Bakker 2890395, Lars van der Duin 2896870, Benthe tromp 2886427, Sterre de Groot 2855707, Sophie Thoolen 2863476"
+title: "De verhouding tussen criminaliteit en vermogen per gemeente in Nederland"
+author: "Roos Bakker (2890395), Lars van der Duin (2896870), Benthe tromp (2886427), Sterre de Groot (2855707), Sophie Thoolen (2863476)"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
