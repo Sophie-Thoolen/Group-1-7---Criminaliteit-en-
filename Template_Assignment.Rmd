@@ -315,7 +315,12 @@ gecombineerd <- left_join(
   by = "Gemeenten"
 )
 
+<<<<<<< Updated upstream
 View(gecombineerd)
+=======
+```{r gen_var2}
+
+>>>>>>> Stashed changes
 ```
 
 
