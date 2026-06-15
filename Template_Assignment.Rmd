@@ -88,8 +88,7 @@ vermogen_2022 <- read_delim("data/vermogen_2022.csv",
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
 #View(vermogen_2022) 
-
-#install.packages("tidyverse")
+install.packages("tidyverse")
 library(tidyverse)
 
 vermogen_2022_clean <- vermogen_2022 %>%
@@ -126,7 +125,7 @@ vermogen_2023 <- read_delim("data/vermogen_2023.csv",
     skip = 5)
 #View(vermogen_2023) 
 
-#install.packages("tidyverse")
+install.packages("tidyverse")
 library(tidyverse)
 
 vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
@@ -191,7 +190,7 @@ misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv",
     skip = 5)
 #View(misdrijven_2022_2023) 
 
-#install.packages("tidyverse")
+install.packages("tidyverse")
 library(tidyverse)
 
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
@@ -216,7 +215,7 @@ library(readr)
 Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
 View(Misdrijven_2024)
 
-#install.packages("tidyverse")
+install.packages("tidyverse")
 library(tidyverse)
 
 Misdrijven_2024 <- Misdrijven_2024 %>%
@@ -276,7 +275,6 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 ## 3.2 Generate necessary variables
 
 Variable 1
-
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
