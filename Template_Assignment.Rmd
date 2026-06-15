@@ -303,7 +303,7 @@ View(vermogen_2022_clean)
 
 #huishoudens combineren met misdrijven 2024
 ```{r}
-Huishoudens_misdrijven_2024 <- left_join(
+huishoudens_misdrijven_2024 <- left_join(
   Misdrijven_2024_clean,
   vermogen_2024_clean %>% select(Gemeenten, Huishoudens_x1000),
   by = "Gemeenten"
