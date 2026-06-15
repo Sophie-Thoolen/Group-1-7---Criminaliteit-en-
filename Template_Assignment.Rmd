@@ -328,7 +328,7 @@ misdrijven_2022_2023_clean <- left_join(
 ) %>%
   left_join(
     vermogen_2022_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2022 = huishoudens_x1000),
-    by = c("regio's" = "gemeenten")
+    by = c("Regio's" = "gemeenten")
   )
 
 View(misdrijven_2022_2023_clean)
