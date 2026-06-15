@@ -267,7 +267,7 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 ## 3.2 Generate necessary variables
 
-Variable 1
+#Variable 1
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
@@ -334,7 +334,7 @@ View(misdrijven_2022_2023_clean)
 ```
 
 
-Variable 2 
+#Variable 2 
 #misdrijven per huishouden 2024
 ```{r gen_var2}
 gecombineerd <- gecombineerd %>%
