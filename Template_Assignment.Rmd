@@ -351,8 +351,8 @@ gecombineerd <- gecombineerd %>%
 ```{r}
 misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
   mutate(
-    misdrijven_per_1000_inwoners_2022 = as.numeric(aantal...2) / Huishoudens_2022,
-    misdrijven_per_1000_inwoners_2023 = as.numeric(aantal...3) / Huishoudens_2023
+    misdrijven_per_1000_huishoudens_2022 = as.numeric(aantal...2) / Huishoudens_2022,
+    misdrijven_per_1000_huishoudens_2023 = as.numeric(aantal...3) / Huishoudens_2023
   )
 
 View(misdrijven_2022_2023_clean)
