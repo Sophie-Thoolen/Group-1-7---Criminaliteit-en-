@@ -51,8 +51,8 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 ###datasets
 ```{r}
 library(readr)
-Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
-View(Misdrijven_2024)
+misdrijven_2024 <- read_delim("data/misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
+View(misdrijven_2024)
  
 library(readr)
 misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv", 
@@ -208,21 +208,21 @@ View(misdrijven_2022_2023_clean)
 ##2024 Misdrijven clean
 ```{r}
 library(readr)
-Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
-View(Misdrijven_2024)
+misdrijven_2024 <- read_delim("data/misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
+View(misdrijven_2024)
 
 install.packages("tidyverse")
 library(tidyverse)
 
-Misdrijven_2024 <- Misdrijven_2024 %>%
+misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
-Misdrijven_2024_clean <- Misdrijven_2024 %>%
+misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
   rename(`Gemeenten` = `Onderwerp`)
 
-View (Misdrijven_2024_clean)
+View (misdrijven_2024_clean)
 ```
 
 ```
@@ -304,7 +304,7 @@ View(vermogen_2022_clean)
 #huishoudens combineren met misdrijven 2024
 ```{r}
 huishoudens_misdrijven_2024 <- left_join(
-  Misdrijven_2024_clean,
+  misdrijven_2024_clean,
   vermogen_2024_clean %>% select(Gemeenten, Huishoudens_x1000),
   by = "Gemeenten"
 )
