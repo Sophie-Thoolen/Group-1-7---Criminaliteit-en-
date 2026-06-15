@@ -295,8 +295,9 @@ vermogen_2024_clean <- vermogen_2024_clean %>%
 table(vermogen_2022_clean$vermogen_groep)
 View(vermogen_2022_clean)
 ```
+#Variable 2
 
-#huishoudens combineren met misdrijven 2024
+##huishoudens combineren in misdrijven 2022 en 2023
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
   misdrijven_2022_2023,
@@ -319,10 +320,8 @@ misdrijven_2022_2023_clean <- left_join(
 View(misdrijven_2022_2023_clean)
 ```
 
-
-#huishoudens combineren in misdrijven 2022 en 2023
 ```{r}
-misdrijven_2022_2023_clean <- left_join(
+misdrijven_2022_2024_clean <- left_join(
   misdrijven_2022_2023,
   vermogen_2023_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2023 = huishoudens_x1000),
   by = c("Regio's" = "gemeenten")
@@ -331,47 +330,49 @@ misdrijven_2022_2023_clean <- left_join(
     vermogen_2022_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2022 = huishoudens_x1000),
     by = c("Regio's" = "gemeenten")
   ) %>%
+  left_join(
+    misdrijven_2024_clean %>% select(gemeenten, `Misdrijven 2024`),
+    by = c("Regio's" = "gemeenten")
+  ) %>%
+  left_join(
+    vermogen_2024_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2024 = huishoudens_x1000),
+    by = c("Regio's" = "gemeenten")
+  ) %>%
   rename(
     misdrijven_2022 = aantal...2,
     misdrijven_2023 = aantal...3
   ) %>%
   mutate(
+    misdrijven_per_1000_2022 = as.numeric(misdrijven_2022) / huishoudens_2022,
     misdrijven_per_1000_2023 = as.numeric(misdrijven_2023) / huishoudens_2023,
-    misdrijven_per_1000_2022 = as.numeric(misdrijven_2022) / huishoudens_2022
+    misdrijven_per_1000_2024 = as.numeric(`Misdrijven 2024`) / huishoudens_2024
   )
-
-View(misdrijven_2022_2023_clean)
-```
+view(misdrijven_2022_2024_clean)
 
 
-#Variable 2 
-#misdrijven per huishouden 2024
-```{r gen_var2}
-misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
-  mutate(
-    misdrijven_per_1000_2023 = as.numeric(aantal...3) / huishoudens_2023,
-    misdrijven_per_1000_2022 = as.numeric(aantal...2) / huishoudens_2022
-  )
-
-View(misdrijven_2022_2023_clean)
 
 ```
-#misdrijven per huishouden 2022_2023
-```{r}
-misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
-  mutate(
-    misdrijven_per_1000_huishoudens_2022 = as.numeric(aantal...2) / Huishoudens_2022,
-    misdrijven_per_1000_huishoudens_2023 = as.numeric(aantal...3) / Huishoudens_2023
-  )
-
-View(misdrijven_2022_2023_clean)
-```
-
 
 ## 3.3 Visualize temporal variation
-
+#boxplot misdrijven 
 ```{r}
-
+misdrijven_2022_2024_clean %>%
+  pivot_longer(
+    cols = c(misdrijven_per_1000_2022, misdrijven_per_1000_2023,misdrijven_per_1000_2024),
+    names_to = "jaar",
+    values_to = "misdrijven_per_1000"
+  ) %>%
+  mutate(jaar = ifelse(jaar == "misdrijven_per_1000_2022", 2022, 2023,2024)) %>%
+  filter(!is.na(misdrijven_per_1000)) %>%
+  
+  
+  ggplot(aes(x = factor(jaar), y = misdrijven_per_1000, fill = factor(jaar))) +
+  geom_boxplot(outlier.shape = NA) +
+  coord_cartesian(ylim = c(0, 150)) +
+  scale_y_continuous(breaks = seq(0, 150, by = 25)) +  
+  theme_minimal() +
+  labs(title = "Verdeling misdrijven per 1000 huishoudens",
+       x = "Jaar", y = "Misdrijven per 1000 huishoudens", fill = "Jaar")
 ```
 
 ## 3.4 Visualize spatial variation
