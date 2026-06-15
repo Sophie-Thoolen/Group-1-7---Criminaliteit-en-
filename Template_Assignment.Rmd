@@ -298,6 +298,7 @@ View(vermogen_2022_clean)
 
 #huishoudens combineren met misdrijven 2024
 ```{r}
+<<<<<<< HEAD
 misdrijven_2022_2023_clean <- left_join(
   misdrijven_2022_2023,
   vermogen_2023_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2023 = huishoudens_x1000),
@@ -311,6 +312,19 @@ misdrijven_2022_2023_clean <- left_join(
     misdrijven_2022 = aantal...2,
     misdrijven_2023 = aantal...3
   ) %>%
+vermogen_2024_clean <- vermogen_2024_clean  %>% select(gemeenten, huishoudens_x1000)
+
+misdrijven_2024_nieuw <- misdrijven_2024_clean
+misdrijven_2024_nieuw$gemeenten <- misdrijven_2024_clean$gemeenten
+misdrijven_2024_nieuw$gemeenten <- NULL
+
+huishoudens_misdrijven_2024 <- left_join(
+  misdrijven_2024_nieuw,
+  vermogen_2024_clean %>% select(gemeenten, huishoudens_x1000),
+  by = "gemeenten")
+
+huishoudens_misdrijven_2024 <- huishoudens_misdrijven_2024 %>%
+>>>>>>> f956c49b079fed678998ce850113ba91c952dcbd
   mutate(
     misdrijven_per_1000_2023 = as.numeric(misdrijven_2023) / huishoudens_2023,
     misdrijven_per_1000_2022 = as.numeric(misdrijven_2022) / huishoudens_2022
