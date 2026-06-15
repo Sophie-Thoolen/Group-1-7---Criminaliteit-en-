@@ -120,12 +120,6 @@ colnames(vermogen_2022_clean)
 ## 2023 Vermogen clean
 ```{r}
 library(readr)
-vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
-    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
-    skip = 5)
-#View(vermogen_2023) 
-
-install.packages("tidyverse")
 library(tidyverse)
 
 vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
@@ -135,8 +129,8 @@ vermogen_2023 <- read_delim("data/vermogen_2023.csv",
 vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
-    gemeenten                = `Regio's`,
-    huishoudens_x1000          = `x 1 000`,
+    gemeenten            = `Regio's`,
+    huishoudens_x1000    = `x 1 000`,
     percentage           = `%`,
     vermogen_mld         = `mld euro`,
     vermogen_per_persoon = `1 000 euro...5`,
@@ -144,11 +138,9 @@ vermogen_2023_clean <- vermogen_2023 %>%
   ) %>%
   mutate(across(c(huishoudens_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(Vermogen_mld))
+  filter(!is.na(vermogen_mld))    # ← kleine letter v, gefixt!
 
 glimpse(vermogen_2023_clean)
-
-
 View(vermogen_2023_clean)
 ```
 
@@ -236,7 +228,7 @@ View (Misdrijven_2024_clean)
 ## 2.2 Provide a short summary of the dataset(s)
 
 
-head(dataset)
+
 ```
 
 In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
@@ -305,8 +297,8 @@ View(vermogen_2022_clean)
 ```{r}
 huishoudens_misdrijven_2024 <- left_join(
   Misdrijven_2024_clean,
-  vermogen_2024_clean %>% select(Gemeenten, Huishoudens_x1000),
-  by = "Gemeenten"
+  vermogen_2024_clean %>% select(gemeenten, huishoudens_x1000),
+  by = "gemeenten"
 )
 Huishoudens_misdrijven_2024 <- Huishoudens_misdrijven_2024 %>%
   mutate(
@@ -322,12 +314,12 @@ View(Huishoudens_misdrijven_2024)
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
   misdrijven_2022_2023,
-  vermogen_2023_clean %>% select(Gemeenten, Huishoudens_x1000) %>% rename(Huishoudens_2023 = Huishoudens_x1000),
+  vermogen_2023_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2023 = huishoudens_x1000),
   by = c("Regio's" = "Gemeenten")
 ) %>%
   left_join(
-    vermogen_2022_clean %>% select(Gemeenten, Huishoudens_x1000) %>% rename(Huishoudens_2022 = Huishoudens_x1000),
-    by = c("Regio's" = "Gemeenten")
+    vermogen_2022_clean %>% select(gemeenten, huishoudens_x1000) %>% rename(huishoudens_2022 = huishoudens_x1000),
+    by = c("regio's" = "gemeenten")
   )
 
 View(misdrijven_2022_2023_clean)
