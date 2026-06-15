@@ -356,25 +356,34 @@ view(misdrijven_2022_2024_clean)
 ## 3.3 Visualize temporal variation
 #boxplot misdrijven 
 ```{r}
-misdrijven_2022_2024_clean %>%
+misdrijven_lang <- misdrijven_2022_2024_clean %>%
   pivot_longer(
     cols = c(misdrijven_per_1000_2022, misdrijven_per_1000_2023, misdrijven_per_1000_2024),
     names_to = "jaar",
     values_to = "misdrijven_per_1000"
-  ) %>%
+  )
+misdrijven_lang <- misdrijven_lang %>%
   mutate(jaar = case_when(
     jaar == "misdrijven_per_1000_2022" ~ 2022,
     jaar == "misdrijven_per_1000_2023" ~ 2023,
     jaar == "misdrijven_per_1000_2024" ~ 2024
-  )) %>%
-  filter(!is.na(misdrijven_per_1000)) %>%
-  ggplot(aes(x = factor(jaar), y = misdrijven_per_1000, fill = factor(jaar))) +
-  geom_boxplot(outlier.shape = NA) +
-  coord_cartesian(ylim = c(0, 150)) +
-  scale_y_continuous(breaks = seq(0, 150, by = 25)) +
-  theme_minimal() +
-  labs(title = "Verdeling misdrijven per 1000 huishoudens",
-       x = "Jaar", y = "Misdrijven per 1000 huishoudens", fill = "Jaar")
+  ))
+misdrijven_lang <- misdrijven_lang %>%
+  filter(!is.na(misdrijven_per_1000))
+ggplot(misdrijven_lang, aes(x = factor(jaar), y = misdrijven_per_1000, fill = factor(jaar))) +
+  geom_boxplot(na.rm = TRUE, outlier.colour = "darkblue", width = 0.5,varwidth = TRUE) +
+  scale_fill_manual(values = c("2022" = "lightblue", "2023" = "lightgreen", "2024" = "lightpink")) +
+  scale_y_continuous(breaks = seq(0, 200, by = 20),
+                     limits = c(0,200)) +
+  labs(
+    title = "Verdeling misdrijven per 1000 huishoudens",
+    x = "Jaar",
+    y = "Misdrijven per 1000 huishoudens",
+    fill = "Jaar"
+  ) +
+  theme_minimal()
+
+
 ```
 
 ## 3.4 Visualize spatial variation
