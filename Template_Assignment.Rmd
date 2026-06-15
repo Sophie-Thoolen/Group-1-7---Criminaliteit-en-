@@ -210,11 +210,9 @@ View(misdrijven_2024)
 install.packages("tidyverse")
 library(tidyverse)
 
-Misdrijven_2024 <- Misdrijven_2024 %>%
 misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
-Misdrijven_2024_clean <- Misdrijven_2024 %>%
 misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
