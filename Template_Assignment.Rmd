@@ -358,18 +358,20 @@ view(misdrijven_2022_2024_clean)
 ```{r}
 misdrijven_2022_2024_clean %>%
   pivot_longer(
-    cols = c(misdrijven_per_1000_2022, misdrijven_per_1000_2023,misdrijven_per_1000_2024),
+    cols = c(misdrijven_per_1000_2022, misdrijven_per_1000_2023, misdrijven_per_1000_2024),
     names_to = "jaar",
     values_to = "misdrijven_per_1000"
   ) %>%
-  mutate(jaar = ifelse(jaar == "misdrijven_per_1000_2022", 2022, 2023,2024)) %>%
+  mutate(jaar = case_when(
+    jaar == "misdrijven_per_1000_2022" ~ 2022,
+    jaar == "misdrijven_per_1000_2023" ~ 2023,
+    jaar == "misdrijven_per_1000_2024" ~ 2024
+  )) %>%
   filter(!is.na(misdrijven_per_1000)) %>%
-  
-  
   ggplot(aes(x = factor(jaar), y = misdrijven_per_1000, fill = factor(jaar))) +
   geom_boxplot(outlier.shape = NA) +
   coord_cartesian(ylim = c(0, 150)) +
-  scale_y_continuous(breaks = seq(0, 150, by = 25)) +  
+  scale_y_continuous(breaks = seq(0, 150, by = 25)) +
   theme_minimal() +
   labs(title = "Verdeling misdrijven per 1000 huishoudens",
        x = "Jaar", y = "Misdrijven per 1000 huishoudens", fill = "Jaar")
