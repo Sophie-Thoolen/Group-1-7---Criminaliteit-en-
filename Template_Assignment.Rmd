@@ -356,33 +356,25 @@ view(misdrijven_2022_2024_clean)
 ## 3.3 Visualize temporal variation
 #boxplot misdrijven 
 ```{r}
-misdrijven_lang <- misdrijven_2022_2024_clean %>%
-  pivot_longer(
-    cols = c(misdrijven_per_1000_2022, misdrijven_per_1000_2023, misdrijven_per_1000_2024),
-    names_to = "jaar",
-    values_to = "misdrijven_per_1000"
-  )
-misdrijven_lang <- misdrijven_lang %>%
-  mutate(jaar = case_when(
-    jaar == "misdrijven_per_1000_2022" ~ 2022,
-    jaar == "misdrijven_per_1000_2023" ~ 2023,
-    jaar == "misdrijven_per_1000_2024" ~ 2024
-  ))
-misdrijven_lang <- misdrijven_lang %>%
-  filter(!is.na(misdrijven_per_1000))
-ggplot(misdrijven_lang, aes(x = factor(jaar), y = misdrijven_per_1000, fill = factor(jaar))) +
-  geom_boxplot(na.rm = TRUE, outlier.colour = "darkblue", width = 0.5,varwidth = TRUE) +
-  scale_fill_manual(values = c("2022" = "lightblue", "2023" = "lightgreen", "2024" = "lightpink")) +
-  scale_y_continuous(breaks = seq(20, 180, by = 10),
-                     limits = c(20,180)) +
+misdrijven_lang %>%
+  left_join(df_merged %>% select(gemeenten, vermogen_groep), 
+            by = c("Regio's" = "gemeenten")) %>%
+  filter(!is.na(vermogen_groep)) %>%
+  group_by(jaar, vermogen_groep) %>%
+  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE)) %>%
+  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>%
+  ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) +
+  scale_x_continuous(breaks = c(2022, 2023, 2024)) +
   labs(
-    title = "Verdeling misdrijven per 1000 huishoudens",
+    title = "Misdrijven per jaar per vermogensgroep",
     x = "Jaar",
-    y = "Misdrijven per 1000 huishoudens",
-    fill = "Jaar"
+    y = "Gemiddelde misdrijven per 1000 huishoudens",
+    colour = "Vermogensgroep"
   ) +
   theme_minimal()
-
 
 ```
 
@@ -477,15 +469,6 @@ df_merged <- vermogen_gemiddeld %>%
   )
 df_merged <- df_merged %>%
   mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
-ggplot(df_merged, aes(x = vermogen_gemiddeld, y = misdrijven_per_1000_2024)) +
-  geom_point(colour = "steelblue") +
-  geom_smooth(method = "lm", colour = "darkred") +
-  labs(
-    title = "Verband tussen vermogen en misdrijven (2024)",
-    x = "Gemiddeld vermogen per persoon (x1000 euro)",
-    y = "Misdrijven per 1000 huishoudens"
-  ) +
-  theme_minimal()
 ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
   geom_boxplot(colour = "darkblue", width = 0.5) +
   scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
