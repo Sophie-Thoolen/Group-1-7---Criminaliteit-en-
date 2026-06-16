@@ -412,7 +412,7 @@ ggplot(kaart_data) +
   labs(
     title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
     caption = "Bron: CBS & Politie | Grijs = geen data beschikbaar",
-    fill = "Misdrijven\nper 1000 huishoudens"
+    fill = "Misdrijven\n(per 1000 huishoudens)"
   ) +
   theme_void()
 ```
@@ -458,8 +458,8 @@ ggplot(kaart_vermogen) +
 scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgrey") +
   labs(
     title = "Gemiddeld vermogen per huishouden per gemeente (2024)",
-    caption = "Bron: CBS| Grijs = geen data beschikbaar",
-    fill = "Vermogen (x 1000 euro)"
+    caption = "Bron: CBS | Grijs = geen data beschikbaar",
+    fill = "Vermogen\n(x 1000 euro)"
   ) +
   theme_void()  
 ```
