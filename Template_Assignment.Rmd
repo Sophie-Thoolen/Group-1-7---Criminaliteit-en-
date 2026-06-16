@@ -412,7 +412,7 @@ ggplot(kaart_data) +
   labs(
     title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
     caption = "Bron: CBS & Politie | Grijs = geen data beschikbaar",
-    fill = "Misdrijven\nper 1000"
+    fill = "Misdrijven\nper 1000 huishoudens"
   ) +
   theme_void()
 ```
@@ -455,13 +455,13 @@ kaart_vermogen <- gemeenten_kaart %>%
 
 ggplot(kaart_vermogen) +
   geom_sf(aes(fill = vermogen_gemiddeld)) +
-  scale_fill_gradient(low = "lightyellow", high = "darkblue") +
+scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgrey") +
   labs(
-    title = "Gemiddeld vermogen per persoon per gemeente (2022-2024)",
-    caption = "Bron: CBS",
-    fill = "Vermogen\n(x1000 euro)"
+    title = "Gemiddeld vermogen per huishouden per gemeente (2024)",
+    caption = "Bron: CBS| Grijs = geen data beschikbaar",
+    fill = "Vermogen (x 1000 euro)"
   ) +
-  theme_void()
+  theme_void()  
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
