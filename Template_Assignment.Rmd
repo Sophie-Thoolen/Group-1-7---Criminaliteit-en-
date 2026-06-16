@@ -463,6 +463,30 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   ) +
   theme_void()  
 ```
+```{r}
+df_merged <- df_merged %>%
+  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
+ggplot(df_merged, aes(x = vermogen_gemiddeld, y = misdrijven_per_1000_2024)) +
+  geom_point(colour = "steelblue") +
+  geom_smooth(method = "lm", colour = "darkred") +
+  labs(
+    title = "Verband tussen vermogen en misdrijven (2024)",
+    x = "Gemiddeld vermogen per persoon (x1000 euro)",
+    y = "Misdrijven per 1000 huishoudens"
+  ) +
+  theme_minimal()
+ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
+  geom_boxplot(colour = "darkblue", width = 0.5) +
+  scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
+  labs(
+    title = "Misdrijven per vermogensgroep (2024)",
+    x = "Vermogensgroep",
+    y = "Misdrijven per 1000 huishoudens",
+    fill = "Vermogensgroep"
+  ) +
+  theme_minimal()
+  
+```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
 
