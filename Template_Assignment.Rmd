@@ -354,7 +354,7 @@ view(misdrijven_2022_2024_clean)
 ```
 
 ## 3.3 Visualize temporal variation
-#boxplot misdrijven 
+# line plot misdrijven 
 ```{r}
 misdrijven_lang %>%
   left_join(df_merged %>% select(gemeenten, vermogen_groep), 
