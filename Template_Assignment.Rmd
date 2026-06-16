@@ -416,7 +416,7 @@ ggplot(kaart_data) +
   ) +
   theme_void()
 ```
-#vermogen vergerlijking met misdaad
+#kaart vermogen
 ```{r}
 library(tidyverse)
 library(sf)
@@ -463,7 +463,18 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   ) +
   theme_void()  
 ```
+
+#vergerlijking misdaad vermogen
 ```{r}
+df_merged <- vermogen_gemiddeld %>%
+  left_join(
+    misdrijven_gemeenten %>% select(`Regio's`, misdrijven_per_1000_2024),
+    by = c("gemeenten" = "Regio's")
+  ) %>%
+  left_join(
+    vermogen_2024_clean %>% select(gemeenten, vermogen_groep),
+    by = "gemeenten"
+  )
 df_merged <- df_merged %>%
   mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
 ggplot(df_merged, aes(x = vermogen_gemiddeld, y = misdrijven_per_1000_2024)) +
