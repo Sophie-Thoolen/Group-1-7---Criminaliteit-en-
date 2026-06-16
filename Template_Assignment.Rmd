@@ -409,6 +409,8 @@ ggplot(kaart_data) +
   theme_void()
 ```
 #kaart vermogen
+Here you provide a description of why the plot above is relevant to your specific social problem.
+
 ```{r}
 library(tidyverse)
 library(sf)
@@ -455,7 +457,7 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   ) +
   theme_void()  
 ```
-
+## 3.5 Visualize sub-population variation
 #vergerlijking misdaad vermogen
 ```{r}
 df_merged <- vermogen_gemiddeld %>%
@@ -484,29 +486,34 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
 
-## 3.5 Visualize sub-population variation
-
-What is the poverty rate by state?
-
-```{r visualise_subpopulations}
-dataset$inmetro <- dataset$inmetro %>% as.factor()
-# Boxplot of poverty rate by state using the 'midwest' dataset
-ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribution of Poverty Rates by Metropolitan status (Midwest counties)",
-    x = "Metropolitan Area",
-    y = "Poverty Rate of Adults (%)"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "right"
-  )
-```
-
-Here you provide a description of why the plot above is relevant to your specific social problem.
-
 ## 3.6 Event analysis
+bron 1: https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
+bron 2: https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
+
+```{r}
+misdrijven_lang %>% 
+  left_join(df_merged %>% select(gemeenten, vermogen_groep), by = c("Regio's" = "gemeenten")) %>% 
+  filter(!is.na(vermogen_groep)) %>% 
+  group_by(jaar, vermogen_groep) %>% 
+  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>% 
+  ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) + 
+  geom_vline(xintercept = 2023, linetype = "dashed", colour = "gray40", linewidth = 0.8) +  # verticale lijn
+  annotate("text", x = 2023.05, y = Inf, label = "Uitbreiding cameratoezicht", 
+           hjust = 0, vjust = 1.5, size = 3, colour = "gray40") +  # label bij de lijn
+  geom_line(linewidth = 1.2) + 
+  geom_point(size = 3) + 
+  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) + 
+  scale_x_continuous(breaks = c(2022, 2023, 2024)) + 
+  labs(
+    title = "Misdrijven per jaar per vermogensgroep",
+    subtitle = "Verticale lijn markeert uitbreiding cameratoezicht in 2023",
+    x = "Jaar", 
+    y = "Gemiddelde misdrijven per 1000 huishoudens", 
+    colour = "Vermogensgroep"
+  ) + 
+  theme_minimal()
+```
 
 Analyze the relationship between two variables.
 
