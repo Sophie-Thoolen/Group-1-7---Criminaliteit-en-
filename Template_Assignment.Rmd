@@ -387,7 +387,7 @@ ggplot(misdrijven_lang, aes(x = factor(jaar), y = misdrijven_per_1000, fill = fa
 ```
 
 ## 3.4 Visualize spatial variation
-
+#grafiek 1 kaart 
 ```{r visualise_map}
 #install.packages("cbsodataR")
 #install.packages("sf")
@@ -395,19 +395,71 @@ ggplot(misdrijven_lang, aes(x = factor(jaar), y = misdrijven_per_1000, fill = fa
 library(cbsodataR)
 library(sf)
 library(tidyverse)
-gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
 misdrijven_gemeenten <- misdrijven_2022_2024_clean %>%
   filter(!grepl("RE|Buitenland|niet in te delen|Nederland|Bron", 
                 `Regio's`, ignore.case = TRUE))
+misdrijven_gemeenten <- misdrijven_gemeenten %>%
+  mutate(`Regio's` = case_when(
+    `Regio's` == "'s-Gravenhage (gemeente)" ~ "'s-Gravenhage",
+    `Regio's` == "Groningen (gemeente)"     ~ "Groningen",
+    TRUE                                    ~ `Regio's`
+  ))
 kaart_data <- gemeenten_kaart %>%
   left_join(misdrijven_gemeenten, by = c("statnaam" = "Regio's"))
 ggplot(kaart_data) +
   geom_sf(aes(fill = misdrijven_per_1000_2024)) +
-  scale_fill_gradient(low = "lightyellow", high = "darkred") +
+  scale_fill_gradient(low = "lightyellow", high = "darkred", na.value = "lightgrey") +
   labs(
     title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
-    caption = "Bron: CBS & Politie",
+    caption = "Bron: CBS & Politie | Grijs = geen data beschikbaar",
     fill = "Misdrijven\nper 1000"
+  ) +
+  theme_void()
+```
+
+```{r}
+library(tidyverse)
+library(sf)
+library(cbsodataR)
+gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
+vermogen_2022_gem <- vermogen_2022_clean %>%
+  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
+  select(gemeenten, vermogen_per_persoon) %>%
+  rename(vermogen_2022 = vermogen_per_persoon)
+
+vermogen_2023_gem <- vermogen_2023_clean %>%
+  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
+  select(gemeenten, vermogen_per_persoon) %>%
+  rename(vermogen_2023 = vermogen_per_persoon)
+
+vermogen_2024_gem <- vermogen_2024_clean %>%
+  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
+  select(gemeenten, vermogen_per_persoon) %>%
+  rename(vermogen_2024 = vermogen_per_persoon)
+
+vermogen_gemiddeld <- vermogen_2022_gem %>%
+  left_join(vermogen_2023_gem, by = "gemeenten") %>%
+  left_join(vermogen_2024_gem, by = "gemeenten") %>%
+  mutate(vermogen_gemiddeld = (vermogen_2022 + vermogen_2023 + vermogen_2024) / 3)
+
+vermogen_gemiddeld <- vermogen_gemiddeld %>%
+  mutate(gemeenten = case_when(
+    gemeenten == "'s-Gravenhage (gemeente)" ~ "Den Haag",
+    gemeenten == "Groningen (gemeente)"     ~ "Groningen",
+    gemeenten == "Utrecht (gemeente)"       ~ "Utrecht",
+    TRUE                                    ~ gemeenten
+  ))
+kaart_vermogen <- gemeenten_kaart %>%
+  left_join(vermogen_gemiddeld, by = c("statnaam" = "gemeenten"))
+
+
+ggplot(kaart_vermogen) +
+  geom_sf(aes(fill = vermogen_gemiddeld)) +
+  scale_fill_gradient(low = "lightyellow", high = "darkblue") +
+  labs(
+    title = "Gemiddeld vermogen per persoon per gemeente (2022-2024)",
+    caption = "Bron: CBS",
+    fill = "Vermogen\n(x1000 euro)"
   ) +
   theme_void()
 ```
