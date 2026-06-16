@@ -389,7 +389,27 @@ ggplot(misdrijven_lang, aes(x = factor(jaar), y = misdrijven_per_1000, fill = fa
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
+#install.packages("cbsodataR")
+#install.packages("sf")
 
+library(cbsodataR)
+library(sf)
+library(tidyverse)
+gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
+misdrijven_gemeenten <- misdrijven_2022_2024_clean %>%
+  filter(!grepl("RE|Buitenland|niet in te delen|Nederland|Bron", 
+                `Regio's`, ignore.case = TRUE))
+kaart_data <- gemeenten_kaart %>%
+  left_join(misdrijven_gemeenten, by = c("statnaam" = "Regio's"))
+ggplot(kaart_data) +
+  geom_sf(aes(fill = misdrijven_per_1000_2024)) +
+  scale_fill_gradient(low = "lightyellow", high = "darkred") +
+  labs(
+    title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
+    caption = "Bron: CBS & Politie",
+    fill = "Misdrijven\nper 1000"
+  ) +
+  theme_void()
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
