@@ -416,7 +416,7 @@ ggplot(kaart_data) +
   ) +
   theme_void()
 ```
-
+#vermogen vergerlijking met misdaad
 ```{r}
 library(tidyverse)
 library(sf)
