@@ -3,6 +3,9 @@ title: "De verhouding tussen criminaliteit en vermogen per gemeente in Nederland
 author: "Roos Bakker (2890395), Lars van der Duin (2896870), Benthe tromp (2886427), Sterre de Groot (2855707), Sophie Thoolen (2863476)"
 date: "`r Sys.Date()`"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 # Set-up your environment
@@ -21,69 +24,109 @@ require(yaml)
 
 # Title Page
 
-Include your names
-Sterre de Groot, Benthe Tromp, Lars van der Duin, Sophie Thoolen en Roos Bakker 
-Include the tutorial group 
-Number 7
+*Names*: Sterre de Groot, Benthe Tromp, Lars van der Duin, Sophie
+Thoolen en Roos Bakker
 
-Include your tutorial lecturer's name
-- Chantal Schouwenaar
+*Group Number: 7*
+
+*Tutorial lecturer's name* - Chantal Schouwenaar
 
 # Part 1 - Identify a Social Problem
-"Dutch municipalities with higher income inequality have a higher number of recorded violent crimes per 1,000 inhabitants"
 
-Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
+"*Dutch municipalities with higher income inequality have a higher
+number of recorded violent crimes per 1,000 inhabitants"*
+
+Use APA referencing throughout your document. [Here's a link to some
+explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
 
 Include the following:
 
--   Why is this relevant?
+- Why is this relevant?
 
--   ...
+- ...
 
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
 
-Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
+To reproduce download the data underneath and save them in the 'data/'
+map.
 
-###datasets
-```{r}
+misdrijven_2022_2023.csv \| Data Politie \|
+<https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758>
+\|
+
+Misdrijven_2024.csv \| Data Politie\|
+<https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758>
+\| vermogen_2022.csv \|
+
+CBS StatLine \|
+<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>
+\| vermogen_2023.csv \|
+
+CBS StatLine \|
+<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>\|
+Vermogen_huishoudens_2024.csv \|
+
+CBS StatLine \|
+<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>\|
+
+### 2.1.1 Library
+
+```{r load data}
 library(readr)
 Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
-View(Misdrijven_2024)
 misdrijven_2024 <- read_delim("data/misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
-View(misdrijven_2024)
  
 library(readr)
 misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 3)
-View(misdrijven_2022_2023)
 
 library(readr)
 X_Vermogen_huishoudens_2024 <- read_delim("data/ Vermogen_huishoudens_2024.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
-View(X_Vermogen_huishoudens_2024)
 
 library(readr)
 vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
-View(vermogen_2023)
 
 library(readr)
 vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, 
     skip = 5)
-View(vermogen_2022) 
 
 ```
 
-#Gecleande versies 
-##2022 Vermogen clean
+In this case we see 28 variables, but we miss some information on what
+units they are in. We also don't know anything about the year/moment in
+which this data has been captured.
+
+These are things that are usually included in the metadata of the
+dataset. For your project, you need to provide us with the information
+from your metadata that we need to understand your dataset of choice.
+
+## 2.3 Describe the type of variables included
+
+Think of things like:
+
+- Do the variables contain health information or SES information?
+
+- Have they been measured by interviewing individuals or is the data
+  coming from administrative sources?
+
+*For the sake of this example, I will continue with the assignment...*
+
+# Part 3 - Quantifying
+
+## 3.1 Data cleaning
+
+### Cleaned version vermogen 2022
+
 ```{r}
 library(readr)
 vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
@@ -119,7 +162,8 @@ colnames(vermogen_2022_clean)
 #  filter(vermogen_2022 != 0)
 ```
 
-## 2023 Vermogen clean
+### Cleaned version vermogen 2023
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -146,7 +190,8 @@ glimpse(vermogen_2023_clean)
 View(vermogen_2023_clean)
 ```
 
-##2024 Vermogen clean
+### Cleaned version vermogen 2024
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -173,7 +218,8 @@ glimpse(vermogen_2024_clean)
 View(vermogen_2024_clean)
 ```
 
-## 2022_2023 Misdrijven clean
+### Cleaned version 2022 2023 vermogen
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -199,7 +245,8 @@ glimpse(misdrijven_2022_2023_clean)
 View(misdrijven_2022_2023_clean)
 ```
 
-##2024 Misdrijven clean
+### Cleaned version 2024 vermogen
+
 ```{r}
 library(readr)
 Misdrijven_2024 <- read_delim("data/Misdrijven_2024.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,skip = 3)
@@ -222,47 +269,10 @@ View (Misdrijven_2024_clean)
 View (misdrijven_2024_clean)
 ```
 
-```
-```
-
-```{r}
-
-
-#midwest is an example dataset included in the tidyverse package
-
-## 2.2 Provide a short summary of the dataset(s)
-
-
-
-```
-
-In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
-
-These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
-
-## 2.3 Describe the type of variables included
-
-Think of things like:
-
--   Do the variables contain health information or SES information?
-
--   Have they been measured by interviewing individuals or is the data coming from administrative sources?
-
-*For the sake of this example, I will continue with the assignment...*
-
-# Part 3 - Quantifying
-
-## 3.1 Data cleaning
-
-Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
-
-
-
-Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
-
 ## 3.2 Generate necessary variables
 
-#Variable 1
+### Variable 1
+
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
@@ -295,9 +305,12 @@ vermogen_2024_clean <- vermogen_2024_clean %>%
 table(vermogen_2022_clean$vermogen_groep)
 View(vermogen_2022_clean)
 ```
-#Variable 2
 
-##huishoudens combineren in misdrijven 2022 en 2023
+### Variable 2
+
+Combining huishoudens from vermogen_2023 (cleaned version) and
+misdrijven_2022_202
+
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
   misdrijven_2022_2023,
@@ -317,7 +330,7 @@ misdrijven_2022_2023_clean <- left_join(
     misdrijven_per_1000_2022 = as.numeric(misdrijven_2022) / huishoudens_2022
   )
 
-View(misdrijven_2022_2023_clean)
+
 ```
 
 ```{r}
@@ -347,14 +360,13 @@ misdrijven_2022_2024_clean <- left_join(
     misdrijven_per_1000_2023 = as.numeric(misdrijven_2023) / huishoudens_2023,
     misdrijven_per_1000_2024 = as.numeric(`Misdrijven 2024`) / huishoudens_2024
   )
-view(misdrijven_2022_2024_clean)
-
-
 
 ```
 
 ## 3.3 Visualize temporal variation
-# line plot misdrijven 
+
+### Line plot misdrijven
+
 ```{r}
 misdrijven_lang %>%
   left_join(df_merged %>% select(gemeenten, vermogen_groep), 
@@ -379,7 +391,9 @@ misdrijven_lang %>%
 ```
 
 ## 3.4 Visualize spatial variation
-#grafiek 1 kaart 
+
+### Map misdrijven data 
+
 ```{r visualise_map}
 #install.packages("cbsodataR")
 #install.packages("sf")
@@ -408,8 +422,11 @@ ggplot(kaart_data) +
   ) +
   theme_void()
 ```
-#kaart vermogen
-Here you provide a description of why the plot above is relevant to your specific social problem.
+
+### Map vermogen data 
+
+Here you provide a description of why the plot above is relevant to your
+specific social problem.
 
 ```{r}
 library(tidyverse)
@@ -457,8 +474,11 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   ) +
   theme_void()  
 ```
+
 ## 3.5 Visualize sub-population variation
-#vergerlijking misdaad vermogen
+
+### comparison misdrijven and vermogen per municipality
+
 ```{r}
 df_merged <- vermogen_gemiddeld %>%
   left_join(
@@ -484,11 +504,15 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
   
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+Here you provide a description of why the plot above is relevant to your
+specific social problem.
 
 ## 3.6 Event analysis
-bron 1: https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
-bron 2: https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
+
+bron 1:
+<https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/>
+bron 2:
+<https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/>
 
 ```{r}
 misdrijven_lang %>% 
@@ -521,7 +545,8 @@ Analyze the relationship between two variables.
 
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+Here you provide a description of why the plot above is relevant to your
+specific social problem.
 
 # Part 4 - Discussion
 
