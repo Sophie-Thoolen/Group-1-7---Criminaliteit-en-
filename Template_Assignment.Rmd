@@ -526,6 +526,9 @@ Here you provide a description of why the plot above is relevant to your specifi
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
+The findings of this report suggest that municipalities with lower household wealth generally experience higher levels of registered crime per 1,000 households. This relationship is visible across multiple years (2022,2023,2024) and remains relatively stable over time.
+
+Some limitations should be acknowledged. First, the analysis only uses registered crimes and therefore does not capture unreported crime. Second, household wealth is only one measure of socioeconomic status and does not fully represent inequality. Finally, this analysis covers a period of only three years, which limits the ability to distinguish long-term trends from short-term fluctuations.
 
 # Part 5 - Reproducibility
 
