@@ -320,6 +320,8 @@ misdrijven_2022_2023_clean <- left_join(
 
 ```
 
+Combining all of the data sets.
+
 ```{r}
 misdrijven_2022_2024_clean <- left_join(
   misdrijven_2022_2023,
