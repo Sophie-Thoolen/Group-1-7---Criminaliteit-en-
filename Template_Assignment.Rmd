@@ -73,7 +73,7 @@ Vermogen_huishoudens_2024.csv \|
 CBS StatLine \|
 <https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>\|
 
-### 2.1.1 Library
+### *Library*
 
 ```{r load data}
 library(readr)
@@ -392,7 +392,7 @@ misdrijven_lang %>%
 
 ## 3.4 Visualize spatial variation
 
-### Map misdrijven data 
+### Map misdrijven data
 
 ```{r visualise_map}
 #install.packages("cbsodataR")
@@ -423,7 +423,7 @@ ggplot(kaart_data) +
   theme_void()
 ```
 
-### Map vermogen data 
+### Map vermogen data
 
 Here you provide a description of why the plot above is relevant to your
 specific social problem.
@@ -475,9 +475,12 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   theme_void()  
 ```
 
+Here you provide a description of why the plot above is relevant to your
+specific social problem.
+
 ## 3.5 Visualize sub-population variation
 
-### comparison misdrijven and vermogen per municipality
+### Comparison misdrijven and vermogen per municipality
 
 ```{r}
 df_merged <- vermogen_gemiddeld %>%
@@ -524,7 +527,7 @@ misdrijven_lang %>%
   ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) + 
   geom_vline(xintercept = 2023, linetype = "dashed", colour = "gray40", linewidth = 0.8) +  # verticale lijn
   annotate("text", x = 2023.05, y = Inf, label = "Uitbreiding cameratoezicht", 
-           hjust = 0, vjust = 1.5, size = 3, colour = "gray40") +  # label bij de lijn
+           hjust = 0, vjust = 1.5, size = 3, colour = "gray40") + 
   geom_line(linewidth = 1.2) + 
   geom_point(size = 3) + 
   scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) + 
@@ -551,9 +554,18 @@ specific social problem.
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
-The findings of this report suggest that municipalities with lower household wealth generally experience higher levels of registered crime per 1,000 households. This relationship is visible across multiple years (2022,2023,2024) and remains relatively stable over time.
 
-Some limitations should be acknowledged. First, the analysis only uses registered crimes and therefore does not capture unreported crime. Second, household wealth is only one measure of socioeconomic status and does not fully represent inequality. Finally, this analysis covers a period of only three years, which limits the ability to distinguish long-term trends from short-term fluctuations.
+The findings of this report suggest that municipalities with lower
+household wealth generally experience higher levels of registered crime
+per 1,000 households. This relationship is visible across multiple years
+(2022,2023,2024) and remains relatively stable over time.
+
+Some limitations should be acknowledged. First, the analysis only uses
+registered crimes and therefore does not capture unreported crime.
+Second, household wealth is only one measure of socioeconomic status and
+does not fully represent inequality. Finally, this analysis covers a
+period of only three years, which limits the ability to distinguish
+long-term trends from short-term fluctuations.
 
 # Part 5 - Reproducibility
 
