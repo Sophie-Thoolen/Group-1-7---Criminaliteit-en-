@@ -151,12 +151,6 @@ vermogen_2022_clean <- vermogen_2022 %>%
   filter(!is.na(vermogen_mld))
  
 glimpse(vermogen_2022_clean)
-
-View(vermogen_2022_clean)
-
-colnames(vermogen_2022)
-colnames(vermogen_2022_clean)
-
 #%>%
 #  filter(!is.na(vermogen_2022)) %>%
 #  filter(vermogen_2022 != 0)
@@ -187,7 +181,6 @@ vermogen_2023_clean <- vermogen_2023 %>%
   filter(!is.na(vermogen_mld))    # ← kleine letter v, gefixt!
 
 glimpse(vermogen_2023_clean)
-View(vermogen_2023_clean)
 ```
 
 ### Cleaned version vermogen 2024
@@ -215,7 +208,6 @@ vermogen_2024_clean <- vermogen_2024 %>%
   filter(!is.na(vermogen_mld))
 
 glimpse(vermogen_2024_clean)
-View(vermogen_2024_clean)
 ```
 
 ### Cleaned version 2022 2023 vermogen
@@ -242,7 +234,6 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
   filter(!is.na(misdrijven_2022))    # ← kleine letter m!
 
 glimpse(misdrijven_2022_2023_clean)
-View(misdrijven_2022_2023_clean)
 ```
 
 ### Cleaned version 2024 vermogen
@@ -265,8 +256,6 @@ misdrijven_2024_clean <- misdrijven_2024 %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
   rename(`gemeenten` = `Onderwerp`)
 
-View (Misdrijven_2024_clean)
-View (misdrijven_2024_clean)
 ```
 
 ## 3.2 Generate necessary variables
@@ -303,13 +292,11 @@ vermogen_2024_clean <- vermogen_2024_clean %>%
     TRUE                        ~ "Hoog"
   ))
 table(vermogen_2022_clean$vermogen_groep)
-View(vermogen_2022_clean)
 ```
 
 ### Variable 2
 
-Combining huishoudens from vermogen_2023 (cleaned version) and
-misdrijven_2022_202
+Combining huishoudens from vermogen_2023 and misdrijven_2022_202
 
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
