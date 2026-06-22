@@ -296,7 +296,7 @@ table(vermogen_2022_clean$vermogen_groep)
 
 ### Variable 2
 
-Combining huishoudens from vermogen_2023 and misdrijven_2022_202
+Combining huishoudens from vermogen_2023 and misdrijven_2022_2023
 
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
@@ -412,6 +412,13 @@ ggplot(kaart_data) +
   theme_void()
 ```
 
+This map is relevant to our social problem because it visualizes the
+geographic distribution of crime rates across Dutch municipalities. This
+is an important variable in our hypothesis linking income inequality to
+crime. By showing where crime rates are the highest and lowest, the map
+makes a visual comparison with income inequality data at the same
+municipal level which will contribute to our social problem analysis.
+
 ### Map vermogen data
 
 Here you provide a description of why the plot above is relevant to your
@@ -464,8 +471,11 @@ scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgre
   theme_void()  
 ```
 
-Here you provide a description of why the plot above is relevant to your
-specific social problem.
+This map is relevant to our social problem because it visualizes the
+geographic distribution of average household wealth across Dutch
+municipalities. By showing where average wealth is highest and lowest,
+the map makes an visual comparison with the crime rate map at the same
+municipal level, which will contribute to our social problem analysis.
 
 ## 3.5 Visualize sub-population variation
 
