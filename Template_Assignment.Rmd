@@ -358,12 +358,7 @@ misdrijven_lang %>%
 
 ```
 
-This plot is relevant to our social problem because it visually shows
-the direct relationship between income level (low, medium, high) and
-recorded crime rates in Dutch municipalities from 2022-2024. This graph
-shows that the low-income group has a significantly higher number of
-crimes per 1,000 inhabitants, while the middle-income and high-income
-have significantly lower crime rates.
+This plot is relevant to our social problem because it visually shows the direct relationship between income level (low, medium, high) and recorded crime rates in Dutch municipalities from 2022-2024. This graph shows that the low-income group has a significantly higher number of crimes per 1,000 inhabitants, while the middle-income and high-income have significantly lower crime rates.
 
 ## 3.4 Visualize spatial variation
 
@@ -398,12 +393,7 @@ ggplot(kaart_data) +
   theme_void()
 ```
 
-This map is relevant to our social problem because it visualizes the
-geographic distribution of crime rates across Dutch municipalities. This
-is an important variable in our hypothesis linking income inequality to
-crime. By showing where crime rates are the highest and lowest, the map
-makes a visual comparison with income inequality data at the same
-municipal level which will contribute to our social problem analysis.
+This map is relevant to our social problem because it visualizes the geographic distribution of crime rates across Dutch municipalities. This is an important variable in our hypothesis linking income inequality to crime. By showing where crime rates are the highest and lowest, the map makes a visual comparison with income inequality data at the same municipal level which will contribute to our social problem analysis.
 
 
 ## 3.5 Visualize sub-population variation
@@ -438,12 +428,7 @@ ggplot(df_merged_clean, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fi
   
 ```
 
-This boxplot is relevant to our social problem because it directly
-compares crime rates across municipalities grouped by wealth level (low,
-medium, high). This allows us to see whether lower wealth groups are
-associated with a higher crime rate compared to the medium and high
-wealth groups. This supports our hypothesis that different wealth groups
-are linked to a different amount of crime.
+This boxplot is relevant to our social problem because it directly compares crime rates across municipalities grouped by wealth level (low, medium, high). This allows us to see whether lower wealth groups are associated with a higher crime rate compared to the medium and high wealth groups. This supports our hypothesis that different wealth groups are linked to a different amount of crime.
 
 ## 3.6 Event analysis
 
