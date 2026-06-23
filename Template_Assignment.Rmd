@@ -387,63 +387,6 @@ crime. By showing where crime rates are the highest and lowest, the map
 makes a visual comparison with income inequality data at the same
 municipal level which will contribute to our social problem analysis.
 
-### Map vermogen data
-
-Here you provide a description of why the plot above is relevant to your
-specific social problem.
-
-```{r}
-library(tidyverse)
-library(sf)
-library(cbsodataR)
-gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
-vermogen_2022_gem <- vermogen_2022_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2022 = vermogen_per_persoon)
-
-vermogen_2023_gem <- vermogen_2023_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2023 = vermogen_per_persoon)
-
-vermogen_2024_gem <- vermogen_2024_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2024 = vermogen_per_persoon)
-
-vermogen_gemiddeld <- vermogen_2022_gem %>%
-  left_join(vermogen_2023_gem, by = "gemeenten") %>%
-  left_join(vermogen_2024_gem, by = "gemeenten") %>%
-  mutate(vermogen_gemiddeld = (vermogen_2022 + vermogen_2023 + vermogen_2024) / 3)
-
-vermogen_gemiddeld <- vermogen_gemiddeld %>%
-  mutate(gemeenten = case_when(
-    gemeenten == "'s-Gravenhage (gemeente)" ~ "Den Haag",
-    gemeenten == "Groningen (gemeente)"     ~ "Groningen",
-    gemeenten == "Utrecht (gemeente)"       ~ "Utrecht",
-    TRUE                                    ~ gemeenten
-  ))
-kaart_vermogen <- gemeenten_kaart %>%
-  left_join(vermogen_gemiddeld, by = c("statnaam" = "gemeenten"))
-
-
-ggplot(kaart_vermogen) +
-  geom_sf(aes(fill = vermogen_gemiddeld)) +
-scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgrey") +
-  labs(
-    title = "Gemiddeld vermogen per huishouden per gemeente (2024)",
-    caption = "Bron: CBS | Grijs = geen data beschikbaar",
-    fill = "Vermogen\n(x 1000 euro)"
-  ) +
-  theme_void()  
-```
-
-This map is relevant to our social problem because it visualizes the
-geographic distribution of average household wealth across Dutch
-municipalities. By showing where average wealth is highest and lowest,
-the map makes an visual comparison with the crime rate map at the same
-municipal level, which will contribute to our social problem analysis.
 
 ## 3.5 Visualize sub-population variation
 
