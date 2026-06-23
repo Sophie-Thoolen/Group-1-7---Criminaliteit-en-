@@ -134,9 +134,11 @@ steps were applied:
 - Missing values (`"."`) were replaced with `NA`
 - Column names were renamed to readable English variable names
 - Numeric columns were converted from text to numeric format
-- Rows with missing wealth values were removed, as these represent non-municipal aggregates (e.g. national totals)
+- Rows with missing wealth values were removed, as these represent
+  non-municipal aggregates (e.g. national totals)
 
 ### Vermogen 2022
+
 ```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -218,6 +220,7 @@ glimpse(misdrijven_2022_2023_clean)
 ```
 
 ### Misdrijven 2024
+
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`aantal`, `aantal` == ".", NA))
@@ -326,6 +329,7 @@ misdrijven_2022_2024_clean <- left_join(
 ```
 
 ## 3.3 Visualize temporal variation
+
 ### Line plot misdrijven
 
 ```{r}
@@ -371,7 +375,12 @@ ggplot(misdrijven_samenvatting,
   
 ```
 
-This plot is relevant to our social problem because it visually shows the direct relationship between income level (low, medium, high) and recorded crime rates in Dutch municipalities from 2022-2024. This graph shows that the low-income group has a significantly higher number of crimes per 1,000 inhabitants, while the middle-income and high-income have significantly lower crime rates.
+This plot is relevant to our social problem because it visually shows
+the direct relationship between income level (low, medium, high) and
+recorded crime rates in Dutch municipalities from 2022-2024. This graph
+shows that the low-income group has a significantly higher number of
+crimes per 1,000 inhabitants, while the middle-income and high-income
+have significantly lower crime rates.
 
 ## 3.4 Visualize spatial variation
 
@@ -407,49 +416,44 @@ ggplot(kaart_data) +
   theme_void()
 ```
 
-This map is relevant to our social problem because it visualizes the geographic distribution of crime rates across Dutch municipalities. This is an important variable in our hypothesis linking income inequality to crime. By showing where crime rates are the highest and lowest, the map makes a visual comparison with income inequality data at the same municipal level which will contribute to our social problem analysis.
+This map is relevant to our social problem because it visualizes the
+geographic distribution of crime rates across Dutch municipalities. This
+is an important variable in our hypothesis linking income inequality to
+crime. By showing where crime rates are the highest and lowest, the map
+makes a visual comparison with income inequality data at the same
+municipal level which will contribute to our social problem analysis.
 
 ## 3.5 Visualize sub-population variation
 
 ### Comparison misdrijven and vermogen per municipality
 
 ```{r}
-df_merged <- vermogen_gemiddeld %>%
-  left_join(
-    misdrijven_gemeenten %>% select(`Regio's`, misdrijven_per_1000_2024),
-    by = c("gemeenten" = "Regio's")
-  ) %>%
-df_2024 <- misdrijven_2022_2024_clean %>%
-  select(`Regio's`, misdrijven_per_1000_2024) %>%
-  left_join(
-    vermogen_2024_clean %>% select(gemeenten, vermogen_groep),
-    by = "gemeenten"
-  )
-df_merged <- df_merged %>%
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
-df_merged_clean <- df_merged %>% 
-  filter(!is.na(vermogen_groep), 
-         !is.na(misdrijven_per_1000_2024))
-ggplot(df_merged_clean, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
-    by = c("Regio's" = "gemeenten")
-  ) %>%
-  filter(!is.na(vermogen_groep))
-
-ggplot(df_2024, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
-  geom_boxplot(colour = "darkblue", width = 0.5) +
-  scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
-  scale_fill_manual(values = c("Low" = "lightpink", "Medium" = "lightyellow", "High" = "lightgreen")) +
+ggplot(misdrijven_lang,
+       aes(x = vermogen_groep, y = misdrijven_per_1000, fill = vermogen_groep)) +
+  geom_boxplot() +
+  facet_wrap(~ jaar) +
+  scale_fill_manual(values = c(
+    "Low"      = "pink",
+    "Medium" = "lightyellow",
+    "High"      = "lightgreen"
+  )) +
+  coord_cartesian(ylim = c(20,200)) +
   labs(
-    title = "Crime rate per wealth group (2024)",
-    x = "Wealth group",
-    y = "Crimes per 1000 houselholds",
-    y = "Crimes per 1000 households",
-    fill = "Wealth group"
+    title = "Misdrijven per 1000 inwoners per vermogensgroep (2022–2024)",
+    x = "Vermogensgroep",
+    y = "Misdrijven per 1000 inwoners",
+    fill = "Vermogensgroep"
   ) +
   theme_minimal()
+
 ```
 
-This boxplot is relevant to our social problem because it directly compares crime rates across municipalities grouped by wealth level (low, medium, high). This allows us to see whether lower wealth groups are associated with a higher crime rate compared to the medium and high wealth groups. This supports our hypothesis that different wealth groups are linked to a different amount of crime.
+This boxplot is relevant to our social problem because it directly
+compares crime rates across municipalities grouped by wealth level (low,
+medium, high). This allows us to see whether lower wealth groups are
+associated with a higher crime rate compared to the medium and high
+wealth groups. This supports our hypothesis that different wealth groups
+are linked to a different amount of crime.
 
 ## 3.6 Event analysis
 
@@ -472,8 +476,8 @@ misdrijven_lang %>%
            hjust = 0, vjust = 1.5, size = 3, colour = "gray40") + 
   geom_line(linewidth = 1.2) + 
   geom_point(size = 3) + 
-  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) + 
-  scale_colour_manual(values = c("Low" = "lightpink", "Medium" = "orange", "High" = "lightgreen")) + 
+  scale_colour_manual(values = c("Laag" = "pink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) + 
+  scale_colour_manual(values = c("Low" = "pink", "Medium" = "orange", "High" = "lightgreen")) + 
   scale_x_continuous(breaks = c(2022, 2023, 2024)) + 
   labs(
     title = "Misdrijven per jaar per vermogensgroep",
