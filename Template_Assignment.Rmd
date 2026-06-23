@@ -22,6 +22,7 @@ library(tidyverse)
 library(readr)
 library(rmarkdown)
 library(yaml)
+library(sf)
 ```
 
 # Title Page
@@ -392,6 +393,7 @@ misdrijven_gemeenten <- misdrijven_gemeenten %>%
     `Regio's` == "Groningen (gemeente)"     ~ "Groningen",
     TRUE                                    ~ `Regio's`
   ))
+gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
 kaart_data <- gemeenten_kaart %>%
   left_join(misdrijven_gemeenten, by = c("statnaam" = "Regio's"))
 ggplot(kaart_data) +
