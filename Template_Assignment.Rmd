@@ -520,7 +520,7 @@ long-term trends from short-term fluctuations.
 
 ## 5.1 Github repository link
 
-Provide the link to your PUBLIC repository here: ...
+Public repository: https://github.com/Sophie-Thoolen/Group-1-7---Criminaliteit-en-
 
 ## 5.2 Reference list
 Flight, S. (2023, 8 augustus). Gemeentelijk cameratoezicht groeit maar door. Secondant. https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
