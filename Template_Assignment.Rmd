@@ -242,9 +242,9 @@ summary(vermogen_2024_clean$vermogen_per_persoon)
 
 vermogen_2022_clean <- vermogen_2022_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
+    vermogen_per_persoon < 300  ~ "Low",
+    vermogen_per_persoon < 500  ~ "Medium",
+    TRUE                        ~ "High"
   ))
 
 vermogen_2023_clean <- vermogen_2023_clean %>%
@@ -252,16 +252,16 @@ vermogen_2023_clean <- vermogen_2023_clean %>%
 
 vermogen_2023_clean <- vermogen_2023_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
+    vermogen_per_persoon < 300  ~ "Low",
+    vermogen_per_persoon < 500  ~ "Medium",
+    TRUE                        ~ "High"
   ))
 
 vermogen_2024_clean <- vermogen_2024_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
+    vermogen_per_persoon < 300  ~ "Low",
+    vermogen_per_persoon < 500  ~ "Medium",
+    TRUE                        ~ "High"
   ))
 table(vermogen_2022_clean$vermogen_groep)
 ```
@@ -329,26 +329,48 @@ misdrijven_2022_2024_clean <- left_join(
 ### Line plot misdrijven
 
 ```{r}
+misdrijven_lang <- misdrijven_2022_2024_clean %>%
+  select(`Regio's`,
+         misdrijven_per_1000_2022,
+         misdrijven_per_1000_2023,
+         misdrijven_per_1000_2024) %>%
+  pivot_longer(
+    cols = starts_with("misdrijven_per_1000"),
+    names_to = "jaar",
+    values_to = "misdrijven_per_1000"
+  ) %>%
+  mutate(
+    jaar = case_when(
+      jaar == "misdrijven_per_1000_2022" ~ 2022,
+      jaar == "misdrijven_per_1000_2023" ~ 2023,
+      jaar == "misdrijven_per_1000_2024" ~ 2024
+    )
+  ) %>%
+  left_join(
+    vermogen_2024_clean %>% select(gemeenten, vermogen_groep),
+    by = c("Regio's" = "gemeenten")
+  ) %>%
+  filter(!is.na(vermogen_groep))
+```
+
+```{r}
 misdrijven_lang %>%
-  left_join(df_merged %>% select(gemeenten, vermogen_groep), 
-            by = c("Regio's" = "gemeenten")) %>%
-  filter(!is.na(vermogen_groep)) %>%
   group_by(jaar, vermogen_groep) %>%
-  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE)) %>%
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>%
+  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE),
+            .groups = "drop") %>%
+  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Low", "Medium", "High"))) %>%
   ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 3) +
-  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) +
+  scale_colour_manual(values = c("Low" = "lightpink", "Medium" = "orange", "High" = "lightgreen")) +
   scale_x_continuous(breaks = c(2022, 2023, 2024)) +
   labs(
-    title = "Misdrijven per jaar per vermogensgroep",
-    x = "Jaar",
-    y = "Gemiddelde misdrijven per 1000 huishoudens",
-    colour = "Vermogensgroep"
+    title = "Crimes per year by wealth group",
+    x = "Year",
+    y = "Average crimes per 1,000 households",
+    colour = "Wealth group"
   ) +
   theme_minimal()
-
 ```
 
 This plot is relevant to our social problem because it visually shows the direct relationship between income level (low, medium, high) and recorded crime rates in Dutch municipalities from 2022-2024. This graph shows that the low-income group has a significantly higher number of crimes per 1,000 inhabitants, while the middle-income and high-income have significantly lower crime rates.
@@ -393,31 +415,24 @@ This map is relevant to our social problem because it visualizes the geographic 
 ### Comparison misdrijven and vermogen per municipality
 
 ```{r}
-df_merged <- vermogen_gemiddeld %>%
-  left_join(
-    misdrijven_gemeenten %>% select(`Regio's`, misdrijven_per_1000_2024),
-    by = c("gemeenten" = "Regio's")
-  ) %>%
+df_2024 <- misdrijven_2022_2024_clean %>%
+  select(`Regio's`, misdrijven_per_1000_2024) %>%
   left_join(
     vermogen_2024_clean %>% select(gemeenten, vermogen_groep),
-    by = "gemeenten"
-  )
-df_merged <- df_merged %>%
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
-df_merged_clean <- df_merged %>% 
-  filter(!is.na(vermogen_groep), 
-         !is.na(misdrijven_per_1000_2024))
-ggplot(df_merged_clean, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
+    by = c("Regio's" = "gemeenten")
+  ) %>%
+  filter(!is.na(vermogen_groep))
+
+ggplot(df_2024, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
   geom_boxplot(colour = "darkblue", width = 0.5) +
-  scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
+  scale_fill_manual(values = c("Low" = "lightpink", "Medium" = "lightyellow", "High" = "lightgreen")) +
   labs(
     title = "Crime rate per wealth group (2024)",
     x = "Wealth group",
-    y = "Crimes per 1000 houselholds",
+    y = "Crimes per 1000 households",
     fill = "Wealth group"
   ) +
   theme_minimal()
-  
 ```
 
 This boxplot is relevant to our social problem because it directly compares crime rates across municipalities grouped by wealth level (low, medium, high). This allows us to see whether lower wealth groups are associated with a higher crime rate compared to the medium and high wealth groups. This supports our hypothesis that different wealth groups are linked to a different amount of crime.
@@ -435,14 +450,14 @@ misdrijven_lang %>%
   filter(!is.na(vermogen_groep)) %>% 
   group_by(jaar, vermogen_groep) %>% 
   summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE), .groups = "drop") %>% 
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>% 
+  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Low", "Medium", "High"))) %>% 
   ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) + 
   geom_vline(xintercept = 2023, linetype = "dashed", colour = "gray40", linewidth = 0.8) +  # verticale lijn
   annotate("text", x = 2023.05, y = Inf, label = "Uitbreiding cameratoezicht", 
            hjust = 0, vjust = 1.5, size = 3, colour = "gray40") + 
   geom_line(linewidth = 1.2) + 
   geom_point(size = 3) + 
-  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) + 
+  scale_colour_manual(values = c("Low" = "lightpink", "Medium" = "orange", "High" = "lightgreen")) + 
   scale_x_continuous(breaks = c(2022, 2023, 2024)) + 
   labs(
     title = "Misdrijven per jaar per vermogensgroep",
