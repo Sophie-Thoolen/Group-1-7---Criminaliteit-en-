@@ -9,9 +9,11 @@ editor_options:
 ---
 
 # Set-up your environment
+
 ## Reproducibility
-This project uses `renv` for package management.
-To restore the environment, run in the Console:renv::restore()
+
+This project uses `renv` for package management. To restore the
+environment, run in the Console:renv::restore()
 
 ```{r setup, include=FALSE}
 # Packages are managed via renv.
@@ -21,7 +23,6 @@ library(readr)
 library(rmarkdown)
 library(yaml)
 ```
-
 
 # Title Page
 
@@ -51,16 +52,20 @@ Include the following:
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
-To reproduce, download the datasets below and save them in the `data/` folder of the project.
+
+To reproduce, download the datasets below and save them in the `data/`
+folder of the project.
 
 | Bestand | Bron | Link |
-|---|---|---|
-| misdrijven_2022_2023.csv | Data Politie | https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758 |
-| Misdrijven_2024.csv | Data Politie | https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758 |
-| vermogen_2022.csv | CBS StatLine | https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895 |
-| vermogen_2023.csv | CBS StatLine | https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895 |
-| Vermogen_huishoudens_2024.csv | CBS StatLine | https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895 |
+|------------------------|------------------------|------------------------|
+| misdrijven_2022_2023.csv | Data Politie | <https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758> |
+| Misdrijven_2024.csv | Data Politie | <https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758> |
+| vermogen_2022.csv | CBS StatLine | <https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895> |
+| vermogen_2023.csv | CBS StatLine | <https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895> |
+| Vermogen_huishoudens_2024.csv | CBS StatLine | <https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895> |
+
 ### *Library*
+
 ```{r load_data, include=FALSE}
 library(readr)
 
@@ -85,17 +90,26 @@ vermogen_2024        <- read_delim("data/ Vermogen_huishoudens_2024.csv",
                           trim_ws = TRUE, skip = 5)
 
 ```
+
 ## 2.2 Dataset description
 
-This project uses two public datasets. The crime data was collected by the Dutch Police (Data Politie) and covers recorded crimes per municipality for 2022, 2023, and 2024. The wealth data was collected by Statistics Netherlands (CBS) and measures household wealth per municipality for the same years. Both datasets are available at the municipal level (*gemeente*), making them suitable for comparison across regions.
+This project uses two public datasets. The crime data was collected by
+the Dutch Police (Data Politie) and covers recorded crimes per
+municipality for 2022, 2023, and 2024. The wealth data was collected by
+Statistics Netherlands (CBS) and measures household wealth per
+municipality for the same years. Both datasets are available at the
+municipal level (*gemeente*), making them suitable for comparison across
+regions.
 
 | Dataset | Bron | Verzamelaar | Periode | Eenheid | Beperkingen |
-|---|---|---|---|---|---|
+|------------|------------|------------|------------|------------|------------|
 | misdrijven | Data Politie | Politie Nederland | 2022–2024 | Gemeente | Alleen aangiftes, geen dark number |
 | vermogen | CBS StatLine | CBS | 2022–2024 | Gemeente | Gebaseerd op belastingdata |
 
-A key limitation of the crime data is that it only includes **recorded** crimes — unregistered crimes are not captured, which may underrepresent the true crime rate. The wealth data is derived from tax records, which may underrepresent informal income sources
-
+A key limitation of the crime data is that it only includes **recorded**
+crimes — unregistered crimes are not captured, which may underrepresent
+the true crime rate. The wealth data is derived from tax records, which
+may underrepresent informal income sources
 
 ## 2.3 Describe the type of variables included
 
@@ -111,18 +125,16 @@ Think of things like:
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
+The raw dataset contained missing values coded as `"."` and numeric columns 
+stored as text with commas as decimal separators. The following steps were applied:
 
-### Cleaned version vermogen 2022
-
-```{r}
-library(readr)
-vermogen_2022 <- read_delim("data/vermogen_2022.csv", 
-    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
-    skip = 5)
-#View(vermogen_2022) 
-install.packages("tidyverse")
-library(tidyverse)
-
+- Missing values (`"."`) were replaced with `NA`
+- Column names were renamed to readable English variable names
+- Numeric columns were converted from text to numeric format
+- Rows with missing wealth values were removed, as these represent 
+  non-municipal aggregates (e.g. national totals)
+### Vermogen 2022
+```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
@@ -143,16 +155,10 @@ glimpse(vermogen_2022_clean)
 #  filter(vermogen_2022 != 0)
 ```
 
-### Cleaned version vermogen 2023
 
-```{r}
-library(readr)
-library(tidyverse)
+### Vermogen 2023
 
-vermogen_2023 <- read_delim("data/vermogen_2023.csv", 
-    delim = ";", escape_double = FALSE, trim_ws = TRUE, 
-    skip = 5)
-
+```{r clean_vermogen_2023}
 vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
   rename(
@@ -165,7 +171,7 @@ vermogen_2023_clean <- vermogen_2023 %>%
   ) %>%
   mutate(across(c(huishoudens_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
-  filter(!is.na(vermogen_mld))    # ← kleine letter v, gefixt!
+  filter(!is.na(vermogen_mld))   
 
 glimpse(vermogen_2023_clean)
 ```
