@@ -523,7 +523,8 @@ long-term trends from short-term fluctuations.
 Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
-https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
-https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
-https://journals.sagepub.com/doi/10.1177/1088767907310913
-Use APA referencing throughout your document.
+Flight, S. (2023, 8 augustus). Gemeentelijk cameratoezicht groeit maar door. Secondant. https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
+
+Van de Ven, E. (2023, 12 juni). Onderzoek 2023: Momenteel 313.354 beveiligingscamera's in Nederland. VPNGids.nl. https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
+
+Nieuwbeerta, P., McCall, P. L., Elffers, H., & Wittebrood, K. (2008). Neighborhood characteristics and individual homicide risks: Effects of social cohesion, confidence in the police, and socioeconomic disadvantage. Homicide Studies, 12(1), 90–116. https://doi.org/10.1177/1088767907310913
