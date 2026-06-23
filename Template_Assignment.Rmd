@@ -376,7 +376,6 @@ ggplot(misdrijven_samenvatting,
     colour = "Wealth group"
   ) +
   theme_minimal()
-
 ```
 
 This plot is relevant to our social problem because it visually shows
