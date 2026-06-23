@@ -257,9 +257,6 @@ vermogen_2022_var1 <- vermogen_2022_clean %>%
   ))
 
 vermogen_2023_var1 <- vermogen_2023_clean %>%
-  rename_with(tolower)
-
-vermogen_2023_var1 <- vermogen_2023_clean %>%
   mutate(vermogen_groep = case_when(
     vermogen_per_persoon < 300  ~ "Low",
     vermogen_per_persoon < 500  ~ "Medium",
@@ -272,7 +269,7 @@ vermogen_2024_var1 <- vermogen_2024_clean %>%
     vermogen_per_persoon < 500  ~ "Medium",
     TRUE                        ~ "High"
   ))
-table(vermogen_2022_clean$vermogen_groep)
+table(vermogen_2022_var1$vermogen_groep)
 ```
 
 ### Variable 2
