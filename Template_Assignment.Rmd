@@ -133,11 +133,9 @@ steps were applied:
 - Missing values (`"."`) were replaced with `NA`
 - Column names were renamed to readable English variable names
 - Numeric columns were converted from text to numeric format
-- Rows with missing wealth values were removed, as these represent
-  non-municipal aggregates (e.g. national totals)
+- Rows with missing wealth values were removed, as these represent non-municipal aggregates (e.g. national totals)
 
 ### Vermogen 2022
-
 ```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -218,16 +216,22 @@ glimpse(misdrijven_2022_2023_clean)
 
 ```
 
-### Misdrijven 2024
 
+### Misdrijven 2024
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`aantal`, `aantal` == ".", NA))
 
 misdrijven_2024_clean <- misdrijven_2024 %>%
+
   mutate(`aantal` = na_if(`aantal`, ".")) %>%
   rename(`Misdrijven 2024` = `aantal`) %>%
   rename(`gemeenten` = `Regio's`)
+  mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
+  rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
+  rename(`gemeenten` = `Onderwerp`)
+view(misdrijven_2024_clean)
+
 glimpse(misdrijven_2024_clean)
 ```
 
@@ -351,6 +355,13 @@ misdrijven_lang %>%
   theme_minimal()
 
 ```
+
+This plot is relevant to our social problem because it visually shows
+the direct relationship between income level (low, medium, high) and
+recorded crime rates in Dutch municipalities from 2022-2024. This graph
+shows that the low-income group has a significantly higher number of
+crimes per 1,000 inhabitants, while the middle-income and high-income
+have significantly lower crime rates.
 
 ## 3.4 Visualize spatial variation
 
