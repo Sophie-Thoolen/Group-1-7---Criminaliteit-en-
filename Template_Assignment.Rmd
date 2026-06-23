@@ -109,7 +109,7 @@ regions.
 A key limitation of the crime data is that it only includes **recorded**
 crimes — unregistered crimes are not captured, which may underrepresent
 the true crime rate. The wealth data is derived from tax records, which
-may underrepresent informal income sources
+may underrepresent informal income sources.
 
 ## 2.3 Describe the type of variables included
 
@@ -134,7 +134,13 @@ steps were applied:
 - Column names were renamed to readable English variable names
 - Numeric columns were converted from text to numeric format
 - Rows with missing wealth values were removed, as these represent
+<<<<<<< HEAD
   non-municipal aggregates (e.g. national totals) \### Vermogen 2022
+=======
+  non-municipal aggregates (e.g. national totals)
+
+### Vermogen 2022
+>>>>>>> bdf5bb1dca8c07fadd59f4e8b47ad2aaf3b72599
 
 ```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
@@ -197,7 +203,7 @@ vermogen_2024_clean <- vermogen_2024 %>%
 glimpse(vermogen_2024_clean)
 ```
 
-### Cleaned version 2022 2023 misdrijven
+### Misdrijven 2022 2023
 
 ```{r clean misdrijven_2022_2023}
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>% 
@@ -215,17 +221,25 @@ glimpse(misdrijven_2022_2023_clean)
 
 ```
 
+<<<<<<< HEAD
 ### misdrijven 2024
+=======
+### Misdrijven 2024
+>>>>>>> bdf5bb1dca8c07fadd59f4e8b47ad2aaf3b72599
 
 ```{r}
-misdrijven_2024 <- misdrijven_2024 %>%
+ misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
 misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
   rename(`gemeenten` = `Onderwerp`)
+<<<<<<< HEAD
 view(misdrijven_2024_clean)
+=======
+glimpse(misdrijven_2024_clean)
+>>>>>>> bdf5bb1dca8c07fadd59f4e8b47ad2aaf3b72599
 ```
 
 ## 3.2 Generate necessary variables
@@ -382,9 +396,9 @@ ggplot(kaart_data) +
   geom_sf(aes(fill = misdrijven_per_1000_2024)) +
   scale_fill_gradient(low = "lightyellow", high = "darkred", na.value = "lightgrey") +
   labs(
-    title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
-    caption = "Bron: CBS & Politie | Grijs = geen data beschikbaar",
-    fill = "Misdrijven\n(per 1000 huishoudens)"
+    title = "Crimes per 1000 households per municipality (2024)",
+    caption = "Source: CBS & Politie | Grey = no data available",
+    fill = "Crimes\n(per 1000 households)"
   ) +
   theme_void()
 ```
@@ -396,63 +410,6 @@ crime. By showing where crime rates are the highest and lowest, the map
 makes a visual comparison with income inequality data at the same
 municipal level which will contribute to our social problem analysis.
 
-### Map vermogen data
-
-Here you provide a description of why the plot above is relevant to your
-specific social problem.
-
-```{r}
-library(tidyverse)
-library(sf)
-library(cbsodataR)
-gemeenten_kaart <- cbs_get_sf("gemeente", 2024)
-vermogen_2022_gem <- vermogen_2022_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2022 = vermogen_per_persoon)
-
-vermogen_2023_gem <- vermogen_2023_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2023 = vermogen_per_persoon)
-
-vermogen_2024_gem <- vermogen_2024_clean %>%
-  filter(!grepl("LD|Buitenland|Nederland|Bron", gemeenten, ignore.case = TRUE)) %>%
-  select(gemeenten, vermogen_per_persoon) %>%
-  rename(vermogen_2024 = vermogen_per_persoon)
-
-vermogen_gemiddeld <- vermogen_2022_gem %>%
-  left_join(vermogen_2023_gem, by = "gemeenten") %>%
-  left_join(vermogen_2024_gem, by = "gemeenten") %>%
-  mutate(vermogen_gemiddeld = (vermogen_2022 + vermogen_2023 + vermogen_2024) / 3)
-
-vermogen_gemiddeld <- vermogen_gemiddeld %>%
-  mutate(gemeenten = case_when(
-    gemeenten == "'s-Gravenhage (gemeente)" ~ "Den Haag",
-    gemeenten == "Groningen (gemeente)"     ~ "Groningen",
-    gemeenten == "Utrecht (gemeente)"       ~ "Utrecht",
-    TRUE                                    ~ gemeenten
-  ))
-kaart_vermogen <- gemeenten_kaart %>%
-  left_join(vermogen_gemiddeld, by = c("statnaam" = "gemeenten"))
-
-
-ggplot(kaart_vermogen) +
-  geom_sf(aes(fill = vermogen_gemiddeld)) +
-scale_fill_gradient(low = "lightyellow", high = "darkblue", na.value = "lightgrey") +
-  labs(
-    title = "Gemiddeld vermogen per huishouden per gemeente (2024)",
-    caption = "Bron: CBS | Grijs = geen data beschikbaar",
-    fill = "Vermogen\n(x 1000 euro)"
-  ) +
-  theme_void()  
-```
-
-This map is relevant to our social problem because it visualizes the
-geographic distribution of average household wealth across Dutch
-municipalities. By showing where average wealth is highest and lowest,
-the map makes an visual comparison with the crime rate map at the same
-municipal level, which will contribute to our social problem analysis.
 
 ## 3.5 Visualize sub-population variation
 
@@ -474,10 +431,10 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
   geom_boxplot(colour = "darkblue", width = 0.5) +
   scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
   labs(
-    title = "Misdrijven per vermogensgroep (2024)",
-    x = "Vermogensgroep",
-    y = "Misdrijven per 1000 huishoudens",
-    fill = "Vermogensgroep"
+    title = "Crime rate per wealth group (2024)",
+    x = "Wealth group",
+    y = "Crimes per 1000 houselholds",
+    fill = "Wealth group"
   ) +
   theme_minimal()
   
