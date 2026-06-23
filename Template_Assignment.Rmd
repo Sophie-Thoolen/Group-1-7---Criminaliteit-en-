@@ -196,7 +196,7 @@ vermogen_2024_clean <- vermogen_2024 %>%
 glimpse(vermogen_2024_clean)
 ```
 
-### Cleaned version 2022 2023 misdrijven
+### Misdrijven 2022 2023
 
 ```{r clean misdrijven_2022_2023}
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>% 
@@ -216,14 +216,14 @@ glimpse(misdrijven_2022_2023_clean)
 
 ### misdrijven 2024
 ```{r}
-misdrijven_2024 <- misdrijven_2024 %>%
+ misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
 misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
   rename(`gemeenten` = `Onderwerp`)
-view(misdrijven_2024_clean
+glimpse(misdrijven_2024_clean)
 ```
 
 ## 3.2 Generate necessary variables
