@@ -242,9 +242,6 @@ summary(vermogen_2024_clean$vermogen_per_persoon)
 
 vermogen_2022_var1 <- vermogen_2022_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
     vermogen_per_persoon < 300  ~ "Low",
     vermogen_per_persoon < 500  ~ "Medium",
     TRUE                        ~ "High"
@@ -255,9 +252,6 @@ vermogen_2023_var1 <- vermogen_2023_clean %>%
 
 vermogen_2023_var1 <- vermogen_2023_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
     vermogen_per_persoon < 300  ~ "Low",
     vermogen_per_persoon < 500  ~ "Medium",
     TRUE                        ~ "High"
@@ -265,9 +259,6 @@ vermogen_2023_var1 <- vermogen_2023_clean %>%
 
 vermogen_2024_var1 <- vermogen_2024_clean %>%
   mutate(vermogen_groep = case_when(
-    vermogen_per_persoon < 300  ~ "Laag",
-    vermogen_per_persoon < 500  ~ "Gemiddeld",
-    TRUE                        ~ "Hoog"
     vermogen_per_persoon < 300  ~ "Low",
     vermogen_per_persoon < 500  ~ "Medium",
     TRUE                        ~ "High"
@@ -337,37 +328,50 @@ misdrijven_2022_2024_clean <- left_join(
 ### Line plot misdrijven
 
 ```{r}
-misdrijven_2022 %>%
-  left_join(df_merged %>% select(gemeenten, vermogen_groep), 
-            by = c("Regio's" = "gemeenten")) %>%
-  filter(!is.na(vermogen_groep)) %>%
 misdrijven_lang <- misdrijven_2022_2024_clean %>%
-  select(`Regio's`,
-         misdrijven_per_1000_2022,
-         misdrijven_per_1000_2023,
-         misdrijven_per_1000_2024) %>%
+  select(`Regio's`, starts_with("misdrijven_per_1000")) %>%
   pivot_longer(
-    cols = starts_with("misdrijven_per_1000"),
+    cols = starts_with("misdrijven_per_1000"), 
     names_to = "jaar",
+    names_prefix = "misdrijven_per_1000_",
+    names_transform = as.integer,
     values_to = "misdrijven_per_1000"
   ) %>%
-  mutate(
-    jaar = case_when(
-      jaar == "misdrijven_per_1000_2022" ~ 2022,
-      jaar == "misdrijven_per_1000_2023" ~ 2023,
-      jaar == "misdrijven_per_1000_2024" ~ 2024
-    )
-  ) %>%
   left_join(
-    vermogen_2024_clean %>% select(gemeenten, vermogen_groep),
+    vermogen_2024_var1 %>% select(gemeenten, vermogen_groep),
     by = c("Regio's" = "gemeenten")
   ) %>%
   filter(!is.na(vermogen_groep))
+
+misdrijven_samenvatting <- misdrijven_lang %>%
+  group_by(vermogen_groep, jaar) %>%
+  summarise(gem_misdrijven = mean(misdrijven_per_1000, na.rm = TRUE), .groups = "drop")
+
+ggplot(misdrijven_samenvatting,
+       aes(x = jaar, y = gem_misdrijven, colour = vermogen_groep)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = c(2022, 2023, 2024)) +
+  scale_colour_manual(
+    values = c(
+      "Low" = "pink",
+      "Medium" = "orange",
+      "High" = "green"
+    )
+  ) +
+  labs(
+    title = "Misdrijven per 1000 inwoners naar vermogensgroep",
+    x = "Jaar",
+    y = "Gemiddeld aantal misdrijven per 1000 inwoners",
+    colour = "Vermogensgroep"
+  ) +
+  theme_minimal()
+
+  
 ```
 
 ```{r}
 misdrijven_lang %>%
->>>>>>> cabbef794938af9976af81ff6422e3514cda5547
   group_by(jaar, vermogen_groep) %>%
   summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE)) %>%
   mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>%
@@ -381,10 +385,6 @@ misdrijven_lang %>%
   scale_colour_manual(values = c("Low" = "lightpink", "Medium" = "orange", "High" = "lightgreen")) +
   scale_x_continuous(breaks = c(2022, 2023, 2024)) +
   labs(
-    title = "Misdrijven per jaar per vermogensgroep",
-    x = "Jaar",
-    y = "Gemiddelde misdrijven per 1000 huishoudens",
-    colour = "Vermogensgroep"
     title = "Crimes per year by wealth group",
     x = "Year",
     y = "Average crimes per 1,000 households",
