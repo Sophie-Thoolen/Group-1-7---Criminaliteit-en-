@@ -370,30 +370,6 @@ ggplot(misdrijven_samenvatting,
   
 ```
 
-```{r}
-misdrijven_lang %>%
-  group_by(jaar, vermogen_groep) %>%
-  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE)) %>%
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog"))) %>%
-  summarise(gemiddeld = mean(misdrijven_per_1000, na.rm = TRUE),
-            .groups = "drop") %>%
-  mutate(vermogen_groep = factor(vermogen_groep, levels = c("Low", "Medium", "High"))) %>%
-  ggplot(aes(x = jaar, y = gemiddeld, colour = vermogen_groep)) +
-  geom_line(linewidth = 1.2) +
-  geom_point(size = 3) +
-  scale_colour_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "orange", "Hoog" = "lightgreen")) +
-  scale_colour_manual(values = c("Low" = "lightpink", "Medium" = "orange", "High" = "lightgreen")) +
-  scale_x_continuous(breaks = c(2022, 2023, 2024)) +
-  labs(
-    title = "Crimes per year by wealth group",
-    x = "Year",
-    y = "Average crimes per 1,000 households",
-    colour = "Wealth group"
-  ) +
-  theme_minimal()
-
-```
-
 This plot is relevant to our social problem because it visually shows the direct relationship between income level (low, medium, high) and recorded crime rates in Dutch municipalities from 2022-2024. This graph shows that the low-income group has a significantly higher number of crimes per 1,000 inhabitants, while the middle-income and high-income have significantly lower crime rates.
 
 ## 3.4 Visualize spatial variation
