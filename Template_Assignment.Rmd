@@ -220,8 +220,6 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
   filter(!is.na(misdrijven_2022))
 
 glimpse(misdrijven_2022_2023_clean)
-
-
 ```
 
 ### Misdrijven 2024
@@ -242,6 +240,11 @@ glimpse(misdrijven_2024_clean)
 ## 3.2 Generate necessary variables
 
 ### Variable 1
+
+To analyse crime by wealth level, we divided the municipalities into
+three groups (Low, Medium, High) based on wealth per person. We use
+summary() to choose sensible cut-off points and apply the same
+thresholds across all three years.
 
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
@@ -274,7 +277,9 @@ table(vermogen_2022_var1$vermogen_groep)
 
 ### Variable 2
 
-To compare municipalities fairly, we calculate crimes per 1000 households instead of raw totals. Otherwise large cities always score higher due to the higher number of people living there.
+To compare municipalities fairly, we calculate crimes per 1000
+households instead of raw totals. Otherwise large cities always score
+higher due to the higher number of people living there.
 
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
@@ -298,7 +303,10 @@ misdrijven_2022_2023_clean <- left_join(
 
 ```
 
-Here we extend the same approach to all the three years. We join the household counts and crime figures for 2022,2023 and 2024 in one dataset (misdrijven_2022_2024_clean), which forms the basis for the visualisation that follows.
+Here we extend the same approach to all the three years. We join the
+household counts and crime figures for 2022,2023 and 2024 in one dataset
+(misdrijven_2022_2024_clean), which forms the basis for the
+visualisation that follows.
 
 ```{r}
 misdrijven_2022_2024_clean <- left_join(
