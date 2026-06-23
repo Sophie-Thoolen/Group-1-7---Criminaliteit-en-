@@ -226,10 +226,6 @@ misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`aantal` = na_if(`aantal`, ".")) %>%
   rename(`Misdrijven 2024` = `aantal`) %>%
   rename(`gemeenten` = `Regio's`)
-  mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
-  rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
-  rename(`gemeenten` = `Onderwerp`)
-view(misdrijven_2024_clean)
 
 glimpse(misdrijven_2024_clean)
 ```
