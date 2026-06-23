@@ -240,12 +240,7 @@ glimpse(misdrijven_2024_clean)
 ## 3.2 Generate necessary variables
 
 ### Variable 1
-
-To analyse crime by wealth level, we divided the municipalities into
-three groups (Low, Medium, High) based on wealth per person. We use
-summary() to choose sensible cut-off points and apply the same
-thresholds across all three years.
-
+Each municipality is categorized into one of three wealth groups based on average wealth per person: Low (below €300), Medium (between €300 and €500), or High (above €500). This is done for 2022, 2023, and 2024.
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
