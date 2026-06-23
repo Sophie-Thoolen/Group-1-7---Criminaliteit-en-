@@ -37,12 +37,10 @@ Thoolen en Roos Bakker
 *Tutorial lecturer's name* - Chantal Schouwenaar
 
 # Part 1 - Identify a Social Problem
-
 "*Dutch municipalities with higher income inequality have a higher
 number of recorded violent crimes per 1,000 inhabitants"*
 
 ## 1.1 Describe the Social Problem
-
 Crime and socioeconomic inequality are important social issues in the
 Netherlands. Municipalities differ in terms of household wealth and the
 number of registered crimes. Previous research suggests that lower
@@ -56,9 +54,7 @@ wealth experience higher levels of registered crime per 1,000 households
 between 2022 and 2024 (Nieuwbeerta et al, 2008).
 
 # Part 2 - Data Sourcing
-
 ## 2.1 Load in the data
-
 To reproduce, download the datasets below and save them in the `data/`
 folder of the project.
 
@@ -71,7 +67,6 @@ folder of the project.
 | Vermogen_huishoudens_2024.csv | CBS StatLine | <https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895> |
 
 ### *Library*
-
 ```{r load_data, include=FALSE}
 library(readr)
 
@@ -98,7 +93,6 @@ vermogen_2024        <- read_delim("data/ Vermogen_huishoudens_2024.csv",
 ```
 
 ## 2.2 Dataset description
-
 This project uses two public datasets. The crime data was collected by
 the Dutch Police (Data Politie) and covers recorded crimes per
 municipality for 2022, 2023, and 2024. The wealth data was collected by
@@ -111,7 +105,6 @@ underrepresent the true crime rate. The wealth data is derived from tax
 records, which may underrepresent informal income sources.
 
 ## 2.3 Describe the type of variables included
-
 The dataset contains both socioeconomic status (SES) information and
 crime-related information. The main SES variable is household wealth,
 measured by average and median household wealth per municipality. The
@@ -124,9 +117,7 @@ represents a Dutch municipality rather than an individual person or
 household.
 
 # Part 3 - Quantifying
-
 ## 3.1 Data cleaning
-
 The raw dataset contained missing values coded as `"."` and numeric
 columns stored as text with commas as decimal separators. The following
 steps were applied: - Missing values (`"."`) were replaced with `NA` -
@@ -136,7 +127,6 @@ wealth values were removed, as these represent non-municipal aggregates
 (e.g. national totals)
 
 ### Vermogen 2022
-
 ```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -154,7 +144,6 @@ vermogen_2022_clean <- vermogen_2022 %>%
 ```
 
 ### Vermogen 2023
-
 ```{r clean_vermogen_2023}
 vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -172,7 +161,6 @@ vermogen_2023_clean <- vermogen_2023 %>%
 ```
 
 ### Vermogen 2024
-
 ```{r clean_vermogen_2024}
 vermogen_2024_clean <- vermogen_2024 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -190,7 +178,6 @@ vermogen_2024_clean <- vermogen_2024 %>%
 ```
 
 ### Misdrijven 2022 2023
-
 ```{r clean misdrijven_2022_2023}
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>% 
   mutate(across(everything(), ~ na_if(., "."))) %>% 
@@ -205,7 +192,6 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
 ```
 
 ### Misdrijven 2024
-
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`aantal`, `aantal` == ".", NA))
@@ -220,18 +206,15 @@ misdrijven_2024_clean <- misdrijven_2024 %>%
 ## 3.2 Generate necessary variables
 
 ### Variable 1
-
 Each municipality is categorized into one of three wealth groups based
 on average wealth per person: Low (below €300), Medium (between €300 and
 €500), or High (above €500). This is done for 2022, 2023, and 2024.
 
-```{eval=FALSE }
+``` {eval="FALSE"}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
 summary(vermogen_2024_clean$vermogen_per_persoon)
-
-``` 
-
+```
 
 ```{r gen_var1}
 vermogen_2022_var1 <- vermogen_2022_clean %>%
@@ -257,7 +240,6 @@ vermogen_2024_var1 <- vermogen_2024_clean %>%
 ```
 
 ### Variable 2
-
 To compare municipalities fairly, we calculate crimes per 1000
 households instead of raw totals. Otherwise large cities always score
 higher due to the higher number of people living there.
@@ -320,7 +302,6 @@ misdrijven_2022_2024_clean <- left_join(
 ## 3.3 Visualize temporal variation
 
 ### Line plot misdrijven
-
 ```{r}
 misdrijven_lang <- misdrijven_2022_2024_clean %>%
   select(`Regio's`, starts_with("misdrijven_per_1000")) %>%
@@ -372,7 +353,6 @@ have significantly lower crime rates.
 ## 3.4 Visualize spatial variation
 
 ### Map misdrijven data
-
 ```{r visualise_map}
 #install.packages("cbsodataR")
 #install.packages("sf")
@@ -413,7 +393,6 @@ municipal level which will contribute to our social problem analysis.
 ## 3.5 Visualize sub-population variation
 
 ### Comparison misdrijven and vermogen per municipality
-
 ```{r}
 ggplot(misdrijven_lang,
        aes(x = vermogen_groep, y = misdrijven_per_1000, fill = vermogen_groep)) +
@@ -443,7 +422,6 @@ wealth groups. This supports our hypothesis that different wealth groups
 are linked to a different amount of crime.
 
 ## 3.6 Event analysis
-
 ```{r}
 misdrijven_lang %>%
   filter(!is.na(vermogen_groep)) %>%
@@ -481,9 +459,7 @@ increase in camera surveillance is associated with a significant change
 in crime levels in Dutch municipalities (Van de Ven, 2023).
 
 # Part 4 - Discussion
-
 ## 4.1 Discuss your findings
-
 The findings of this report suggest that municipalities with lower
 household wealth generally experience higher levels of registered crime
 per 1,000 households. This relationship is visible across multiple years
@@ -499,12 +475,9 @@ long-term trends from short-term fluctuations.
 # Part 5 - Reproducibility
 
 ## 5.1 Github repository link
-
-Public repository:
 <https://github.com/Sophie-Thoolen/Group-1-7---Criminaliteit-en->
 
 ## 5.2 Reference list
-
 Flight, S. (2023, 8 augustus). Gemeentelijk cameratoezicht groeit maar
 door. Secondant.
 <https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/>
