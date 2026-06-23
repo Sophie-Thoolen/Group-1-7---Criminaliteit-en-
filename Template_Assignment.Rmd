@@ -377,7 +377,6 @@ ggplot(misdrijven_samenvatting,
   ) +
   theme_minimal()
 
-  
 ```
 
 This plot is relevant to our social problem because it visually shows
@@ -461,12 +460,6 @@ wealth groups. This supports our hypothesis that different wealth groups
 are linked to a different amount of crime.
 
 ## 3.6 Event analysis
-
-bron 1:
-<https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/>
-bron 2:
-<https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/>
-
 ```{r}
 misdrijven_lang %>%
   filter(!is.na(vermogen_groep)) %>%
@@ -491,14 +484,23 @@ misdrijven_lang %>%
   theme_minimal()
 ```
 
-Analyze the relationship between two variables..
+This event analysis examines the impact of increased camera surveillance
+in the Netherlands in 2023 on crime rates. In recent years, many
+municipalities have expanded the use of surveillance cameras to improve
+public safety, deter criminal activity, and support law enforcement in
+identifying offenders.
 
-```{r analysis}
+The year 2023 is considered the event year, and crime figures before and
+after the expansion of camera surveillance are compared. The expectation
+is that increased surveillance may reduce crime by increasing the
+perceived risk of being caught. However, it is also possible that
+certain crimes become more frequently reported or detected due to the
+presence of cameras. By analyzing crime data around this event, we can
+assess whether the increase in camera surveillance is associated with a
+significant change in crime levels in Dutch municipalities.
 
-```
-
-Here you provide a description of why the plot above is relevant to your
-specific social problem.
+https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
+https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
 
 # Part 4 - Discussion
 
