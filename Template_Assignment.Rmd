@@ -454,7 +454,7 @@ misdrijven_lang %>%
   theme_minimal()
 ```
 
-Analyze the relationship between two variables.
+Analyze the relationship between two variables..
 
 ```{r analysis}
 
