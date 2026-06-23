@@ -506,8 +506,16 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
   
 ```
 
-Here you provide a description of why the plot above is relevant to your
-specific social problem.
+This boxplot is relevant to our social problem because it directly
+compares crime rates across municipalities grouped by wealth level (low,
+medium, high). This allows us to see whether lower wealth groups are
+associated with a higher crime rate compared to the medium and high
+wealth groups. This supports our hypothesis that different wealth groups
+are linked to a different amount of crime.
+
+The NA group represents municipalities where wealth information is not
+available, so this information is not included in the comparison between
+wealth levels.
 
 ## 3.6 Event analysis
 
