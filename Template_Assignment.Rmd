@@ -277,7 +277,7 @@ table(vermogen_2022_clean$vermogen_groep)
 
 ### Variable 2
 
-Combining households from vermogen_2023 and misdrijven_2022_2023
+To compare municipalities fairly, we calculate crimes per 1000 households instead of raw totals. Otherwise large cities always score higher due to the higher number of people living there.
 
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
@@ -301,7 +301,7 @@ misdrijven_2022_2023_clean <- left_join(
 
 ```
 
-Combining all of the data sets.
+Here we extend the same approach to all the three years. We join the household counts and crime figures for 2022,2023 and 2024 in one dataset (misdrijven_2022_2024_clean), which forms the basis for the visualisation that follows.
 
 ```{r}
 misdrijven_2022_2024_clean <- left_join(
@@ -460,6 +460,7 @@ wealth groups. This supports our hypothesis that different wealth groups
 are linked to a different amount of crime.
 
 ## 3.6 Event analysis
+
 ```{r}
 misdrijven_lang %>%
   filter(!is.na(vermogen_groep)) %>%
@@ -497,8 +498,8 @@ perceived risk of being caught. However, it is also possible that
 certain crimes become more frequently reported or detected due to the
 presence of cameras. By analyzing crime data around this event, we can
 assess whether the increase in camera surveillance is associated with a
-significant change in crime levels in Dutch municipalities (Van de Ven, 2023).
-
+significant change in crime levels in Dutch municipalities (Van de Ven,
+2023).
 
 # Part 4 - Discussion
 
@@ -520,11 +521,21 @@ long-term trends from short-term fluctuations.
 
 ## 5.1 Github repository link
 
-Public repository: https://github.com/Sophie-Thoolen/Group-1-7---Criminaliteit-en-
+Public repository:
+<https://github.com/Sophie-Thoolen/Group-1-7---Criminaliteit-en->
 
 ## 5.2 Reference list
-Flight, S. (2023, 8 augustus). Gemeentelijk cameratoezicht groeit maar door. Secondant. https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
 
-Van de Ven, E. (2023, 12 juni). Onderzoek 2023: Momenteel 313.354 beveiligingscamera's in Nederland. VPNGids.nl. https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
+Flight, S. (2023, 8 augustus). Gemeentelijk cameratoezicht groeit maar
+door. Secondant.
+<https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/>
 
-Nieuwbeerta, P., McCall, P. L., Elffers, H., & Wittebrood, K. (2008). Neighborhood characteristics and individual homicide risks: Effects of social cohesion, confidence in the police, and socioeconomic disadvantage. Homicide Studies, 12(1), 90–116. https://doi.org/10.1177/1088767907310913
+Van de Ven, E. (2023, 12 juni). Onderzoek 2023: Momenteel 313.354
+beveiligingscamera's in Nederland. VPNGids.nl.
+<https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/>
+
+Nieuwbeerta, P., McCall, P. L., Elffers, H., & Wittebrood, K. (2008).
+Neighborhood characteristics and individual homicide risks: Effects of
+social cohesion, confidence in the police, and socioeconomic
+disadvantage. Homicide Studies, 12(1), 90–116.
+<https://doi.org/10.1177/1088767907310913>
