@@ -109,7 +109,7 @@ regions.
 A key limitation of the crime data is that it only includes **recorded**
 crimes — unregistered crimes are not captured, which may underrepresent
 the true crime rate. The wealth data is derived from tax records, which
-may underrepresent informal income sources
+may underrepresent informal income sources.
 
 ## 2.3 Describe the type of variables included
 
@@ -125,15 +125,19 @@ Think of things like:
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
-The raw dataset contained missing values coded as `"."` and numeric columns 
-stored as text with commas as decimal separators. The following steps were applied:
+
+The raw dataset contained missing values coded as `"."` and numeric
+columns stored as text with commas as decimal separators. The following
+steps were applied:
 
 - Missing values (`"."`) were replaced with `NA`
 - Column names were renamed to readable English variable names
 - Numeric columns were converted from text to numeric format
-- Rows with missing wealth values were removed, as these represent 
+- Rows with missing wealth values were removed, as these represent
   non-municipal aggregates (e.g. national totals)
+
 ### Vermogen 2022
+
 ```{r clean_vermogen_2022}
 vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(everything(), ~ na_if(., "."))) %>%
@@ -154,7 +158,6 @@ glimpse(vermogen_2022_clean)
 #  filter(!is.na(vermogen_2022)) %>%
 #  filter(vermogen_2022 != 0)
 ```
-
 
 ### Vermogen 2023
 
@@ -214,7 +217,8 @@ glimpse(misdrijven_2022_2023_clean)
 
 ```
 
-### misdrijven 2024
+### Misdrijven 2024
+
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
