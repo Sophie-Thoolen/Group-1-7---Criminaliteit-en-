@@ -9,18 +9,19 @@ editor_options:
 ---
 
 # Set-up your environment
+## Reproducibility
+This project uses `renv` for package management.
+To restore the environment, run in the Console:renv::restore()
 
-```{r package_install, include=FALSE}
-install.packages("tidyverse")
-install.packages("yaml")
-install.packages("rmarkdown")
+```{r setup, include=FALSE}
+# Packages are managed via renv.
+# Run renv::restore() in the Console before knitting.
+library(tidyverse)
+library(readr)
+library(rmarkdown)
+library(yaml)
 ```
 
-```{r packages}
-require(tidyverse)
-require(rmarkdown)
-require(yaml)
-```
 
 # Title Page
 
@@ -50,28 +51,6 @@ Include the following:
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
-
-To reproduce download the data underneath and save them in the 'data/'
-map.
-
-misdrijven_2022_2023.csv \| Data Politie \|
-<https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758>
-\|
-
-Misdrijven_2024.csv \| Data Politie\|
-<https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758>
-\| vermogen_2022.csv \|
-
-CBS StatLine \|
-<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>
-\| vermogen_2023.csv \|
-
-CBS StatLine \|
-<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>\|
-Vermogen_huishoudens_2024.csv \|
-
-CBS StatLine \|
-<https://opendata.cbs.nl/#/CBS/nl/dataset/86160NED/table?ts=1780405280895>\|
 
 ### *Library*
 
