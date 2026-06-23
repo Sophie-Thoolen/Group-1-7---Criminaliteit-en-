@@ -221,11 +221,9 @@ glimpse(misdrijven_2022_2023_clean)
 
 ```
 
-<<<<<<< HEAD
 ### misdrijven 2024
 =======
 ### Misdrijven 2024
->>>>>>> bdf5bb1dca8c07fadd59f4e8b47ad2aaf3b72599
 
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
@@ -424,7 +422,10 @@ df_merged <- vermogen_gemiddeld %>%
   )
 df_merged <- df_merged %>%
   mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
-ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
+df_merged_clean <- df_merged %>% 
+  filter(!is.na(vermogen_groep), 
+         !is.na(misdrijven_per_1000_2024))
+ggplot(df_merged_clean, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
   geom_boxplot(colour = "darkblue", width = 0.5) +
   scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
   labs(
@@ -443,10 +444,6 @@ medium, high). This allows us to see whether lower wealth groups are
 associated with a higher crime rate compared to the medium and high
 wealth groups. This supports our hypothesis that different wealth groups
 are linked to a different amount of crime.
-
-The NA group represents municipalities where wealth information is not
-available, so this information is not included in the comparison between
-wealth levels.
 
 ## 3.6 Event analysis
 
