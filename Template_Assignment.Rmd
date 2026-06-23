@@ -370,9 +370,9 @@ ggplot(kaart_data) +
   geom_sf(aes(fill = misdrijven_per_1000_2024)) +
   scale_fill_gradient(low = "lightyellow", high = "darkred", na.value = "lightgrey") +
   labs(
-    title = "Misdrijven per 1000 huishoudens per gemeente (2024)",
-    caption = "Bron: CBS & Politie | Grijs = geen data beschikbaar",
-    fill = "Misdrijven\n(per 1000 huishoudens)"
+    title = "Crimes per 1000 households per municipality (2024)",
+    caption = "Source: CBS & Politie | Grey = no data available",
+    fill = "Crimes\n(per 1000 households)"
   ) +
   theme_void()
 ```
@@ -462,10 +462,10 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
   geom_boxplot(colour = "darkblue", width = 0.5) +
   scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
   labs(
-    title = "Misdrijven per vermogensgroep (2024)",
-    x = "Vermogensgroep",
-    y = "Misdrijven per 1000 huishoudens",
-    fill = "Vermogensgroep"
+    title = "Crime rate per wealth group (2024)",
+    x = "Wealth group",
+    y = "Crimes per 1000 houselholds",
+    fill = "Wealth group"
   ) +
   theme_minimal()
   
