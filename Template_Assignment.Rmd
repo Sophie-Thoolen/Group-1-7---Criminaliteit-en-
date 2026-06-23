@@ -39,16 +39,19 @@ Thoolen en Roos Bakker
 "*Dutch municipalities with higher income inequality have a higher
 number of recorded violent crimes per 1,000 inhabitants"*
 
-Use APA referencing throughout your document. [Here's a link to some
-explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
-
 ## 1.1 Describe the Social Problem
 
-Include the following:
-
-- Why is this relevant?
-
-- ...
+Crime and socioeconomic inequality are important social issues in the
+Netherlands. Municipalities differ in terms of household wealth and the
+number of registered crimes. Previous research suggests that lower
+levels of wealth may be associated with higher crime rates because
+economic disadvantages can lead to social exclusion, unemployment, and
+fewer opportunities. Understanding this relationship is important for
+policymakers and local governments, as it can help them develop more
+effective strategies to reduce crime and improve social conditions. This
+study investigates whether Dutch municipalities with lower household
+wealth experience higher levels of registered crime per 1,000 households
+between 2022 and 2024.
 
 # Part 2 - Data Sourcing
 
@@ -114,14 +117,16 @@ may underrepresent informal income sources.
 
 ## 2.3 Describe the type of variables included
 
-Think of things like:
-
-- Do the variables contain health information or SES information?
-
-- Have they been measured by interviewing individuals or is the data
-  coming from administrative sources?
-
-*For the sake of this example, I will continue with the assignment...*
+The dataset contains both socioeconomic status (SES) information and
+crime-related information. The main SES variable is household wealth,
+measured by average and median household wealth per municipality. The
+second key variable is the number of registered crimes per municipality.
+The data does not contain individual health information. All data comes
+from administrative sources collected by the Dutch Central Bureau of
+Statistics (CBS) rather than interviews or surveys. The unit of
+observation is the municipality, which means that each observation
+represents a Dutch municipality rather than an individual person or
+household.
 
 # Part 3 - Quantifying
 
