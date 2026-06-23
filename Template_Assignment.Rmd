@@ -242,7 +242,7 @@ glimpse(misdrijven_2024_clean)
 ## 3.2 Generate necessary variables
 
 ### Variable 1
-
+Each municipality is categorized into one of three wealth groups based on average wealth per person: Low (below €300), Medium (between €300 and €500), or High (above €500). This is done for 2022, 2023, and 2024.
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
