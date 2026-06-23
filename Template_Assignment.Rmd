@@ -240,24 +240,24 @@ summary(vermogen_2023_clean$vermogen_per_persoon)
 summary(vermogen_2024_clean$vermogen_per_persoon)
 
 
-vermogen_2022_clean <- vermogen_2022_clean %>%
+vermogen_2022_var1 <- vermogen_2022_clean %>%
   mutate(vermogen_groep = case_when(
     vermogen_per_persoon < 300  ~ "Laag",
     vermogen_per_persoon < 500  ~ "Gemiddeld",
     TRUE                        ~ "Hoog"
   ))
 
-vermogen_2023_clean <- vermogen_2023_clean %>%
+vermogen_2023_var1 <- vermogen_2023_clean %>%
   rename_with(tolower)
 
-vermogen_2023_clean <- vermogen_2023_clean %>%
+vermogen_2023_var1 <- vermogen_2023_clean %>%
   mutate(vermogen_groep = case_when(
     vermogen_per_persoon < 300  ~ "Laag",
     vermogen_per_persoon < 500  ~ "Gemiddeld",
     TRUE                        ~ "Hoog"
   ))
 
-vermogen_2024_clean <- vermogen_2024_clean %>%
+vermogen_2024_var1 <- vermogen_2024_clean %>%
   mutate(vermogen_groep = case_when(
     vermogen_per_persoon < 300  ~ "Laag",
     vermogen_per_persoon < 500  ~ "Gemiddeld",
@@ -325,11 +325,10 @@ misdrijven_2022_2024_clean <- left_join(
 ```
 
 ## 3.3 Visualize temporal variation
-
 ### Line plot misdrijven
 
 ```{r}
-misdrijven_lang %>%
+misdrijven_2022 %>%
   left_join(df_merged %>% select(gemeenten, vermogen_groep), 
             by = c("Regio's" = "gemeenten")) %>%
   filter(!is.na(vermogen_groep)) %>%
