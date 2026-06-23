@@ -51,7 +51,7 @@ policymakers and local governments, as it can help them develop more
 effective strategies to reduce crime and improve social conditions. This
 study investigates whether Dutch municipalities with lower household
 wealth experience higher levels of registered crime per 1,000 households
-between 2022 and 2024.
+between 2022 and 2024 (Nieuwbeerta et al, 2008).
 
 # Part 2 - Data Sourcing
 
@@ -488,7 +488,7 @@ This event analysis examines the impact of increased camera surveillance
 in the Netherlands in 2023 on crime rates. In recent years, many
 municipalities have expanded the use of surveillance cameras to improve
 public safety, deter criminal activity, and support law enforcement in
-identifying offenders.
+identifying offenders (Koole, 2023).
 
 The year 2023 is considered the event year, and crime figures before and
 after the expansion of camera surveillance are compared. The expectation
@@ -497,10 +497,8 @@ perceived risk of being caught. However, it is also possible that
 certain crimes become more frequently reported or detected due to the
 presence of cameras. By analyzing crime data around this event, we can
 assess whether the increase in camera surveillance is associated with a
-significant change in crime levels in Dutch municipalities.
+significant change in crime levels in Dutch municipalities (Van de Ven, 2023).
 
-https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
-https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
 
 # Part 4 - Discussion
 
@@ -525,5 +523,7 @@ long-term trends from short-term fluctuations.
 Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
-
+https://hetccv.nl/secondant-gemeentelijk-cameratoezicht-groeit-maar-door/
+https://www.vpngids.nl/onderzoek/onderzoek-2023-momenteel-313354-beveiligingscameras-in-nederland/
+https://journals.sagepub.com/doi/10.1177/1088767907310913
 Use APA referencing throughout your document.
