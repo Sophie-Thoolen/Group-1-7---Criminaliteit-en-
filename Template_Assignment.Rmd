@@ -277,7 +277,7 @@ table(vermogen_2022_clean$vermogen_groep)
 
 ### Variable 2
 
-Combining huishoudens from vermogen_2023 and misdrijven_2022_2023
+Combining households from vermogen_2023 and misdrijven_2022_2023
 
 ```{r}
 misdrijven_2022_2023_clean <- left_join(
@@ -370,10 +370,10 @@ ggplot(misdrijven_samenvatting,
     )
   ) +
   labs(
-    title = "Misdrijven per 1000 inwoners naar vermogensgroep",
-    x = "Jaar",
-    y = "Gemiddeld aantal misdrijven per 1000 inwoners",
-    colour = "Vermogensgroep"
+    title = "Crimes per 1000 households per wealth group",
+    x = "Year",
+    y = "Average number of crimes per 1000 households",
+    colour = "Wealth group"
   ) +
   theme_minimal()
 
@@ -443,10 +443,10 @@ ggplot(misdrijven_lang,
   )) +
   coord_cartesian(ylim = c(20,200)) +
   labs(
-    title = "Misdrijven per 1000 inwoners per vermogensgroep (2022–2024)",
-    x = "Vermogensgroep",
-    y = "Misdrijven per 1000 inwoners",
-    fill = "Vermogensgroep"
+    title = "Crimes per 1000 households per wealth group (2022–2024)",
+    x = "Wealth group",
+    y = "Crimes per 1000 households",
+    fill = "Wealth group"
   ) +
   theme_minimal()
 
