@@ -1,7 +1,7 @@
 ---
 title: "The relationship between crime and wealth per municipality in the Netherlands"
 author: "Roos Bakker (2890395), Lars van der Duin (2896870), Benthe tromp (2886427), Sterre de Groot (2855707), Sophie Thoolen (2863476)"
-date: "`r Sys.Date()`"
+date: "`2026-06-23`"
 output: pdf_document
 editor_options: 
   markdown: 
@@ -23,6 +23,8 @@ library(readr)
 library(rmarkdown)
 library(yaml)
 library(sf)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE,
+                      out.width = "60%")
 ```
 
 # The relationship between crime and wealth per municipality in the Netherlands
@@ -60,7 +62,7 @@ between 2022 and 2024 (Nieuwbeerta et al, 2008).
 To reproduce, download the datasets below and save them in the `data/`
 folder of the project.
 
-| Bestand | Bron | Link |
+| Dataset | Source | Link |
 |------------------------|------------------------|------------------------|
 | misdrijven_2022_2023.csv | Data Politie | <https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758> |
 | Misdrijven_2024.csv | Data Politie | <https://data.politie.nl/#/Politie/nl/dataset/47013NED/table?ts=1780489389758> |
@@ -103,17 +105,10 @@ municipality for 2022, 2023, and 2024. The wealth data was collected by
 Statistics Netherlands (CBS) and measures household wealth per
 municipality for the same years. Both datasets are available at the
 municipal level (*gemeente*), making them suitable for comparison across
-regions.
-
-| Dataset | Bron | Verzamelaar | Periode | Eenheid | Beperkingen |
-|------------|------------|------------|------------|------------|------------|
-| misdrijven | Data Politie | Politie Nederland | 2022–2024 | Gemeente | Alleen aangiftes, geen dark number |
-| vermogen | CBS StatLine | CBS | 2022–2024 | Gemeente | Gebaseerd op belastingdata |
-
-A key limitation of the crime data is that it only includes **recorded**
-crimes — unregistered crimes are not captured, which may underrepresent
-the true crime rate. The wealth data is derived from tax records, which
-may underrepresent informal income sources.
+regions. A key limitation of the crime data is that it only includes
+**recorded** crimes — unregistered crimes are not captured, which may
+underrepresent the true crime rate. The wealth data is derived from tax
+records, which may underrepresent informal income sources.
 
 ## 2.3 Describe the type of variables included
 
@@ -134,13 +129,11 @@ household.
 
 The raw dataset contained missing values coded as `"."` and numeric
 columns stored as text with commas as decimal separators. The following
-steps were applied:
-
-- Missing values (`"."`) were replaced with `NA`
-- Column names were renamed to readable English variable names
-- Numeric columns were converted from text to numeric format
-- Rows with missing wealth values were removed, as these represent
-  non-municipal aggregates (e.g. national totals)
+steps were applied: - Missing values (`"."`) were replaced with `NA` -
+Column names were renamed to readable English variable names - Numeric
+columns were converted from text to numeric format - Rows with missing
+wealth values were removed, as these represent non-municipal aggregates
+(e.g. national totals)
 
 ### Vermogen 2022
 
@@ -158,11 +151,6 @@ vermogen_2022_clean <- vermogen_2022 %>%
   mutate(across(c(huishoudens_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
- 
-glimpse(vermogen_2022_clean)
-#%>%
-#  filter(!is.na(vermogen_2022)) %>%
-#  filter(vermogen_2022 != 0)
 ```
 
 ### Vermogen 2023
@@ -181,8 +169,6 @@ vermogen_2023_clean <- vermogen_2023 %>%
   mutate(across(c(huishoudens_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))   
-
-glimpse(vermogen_2023_clean)
 ```
 
 ### Vermogen 2024
@@ -201,8 +187,6 @@ vermogen_2024_clean <- vermogen_2024 %>%
   mutate(across(c(huishoudens_x1000, vermogen_mld, vermogen_per_persoon, vermogen_mediaan),
                 ~ as.numeric(str_replace(., ",", ".")))) %>%
   filter(!is.na(vermogen_mld))
-
-glimpse(vermogen_2024_clean)
 ```
 
 ### Misdrijven 2022 2023
@@ -218,8 +202,6 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
 misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>% 
   mutate(across(c(misdrijven_2022, misdrijven_2023), ~ as.numeric(str_replace(., ",", ".")))) %>% 
   filter(!is.na(misdrijven_2022))
-
-glimpse(misdrijven_2022_2023_clean)
 ```
 
 ### Misdrijven 2024
@@ -233,14 +215,16 @@ misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`aantal` = na_if(`aantal`, ".")) %>%
   rename(`Misdrijven 2024` = `aantal`) %>%
   rename(`gemeenten` = `Regio's`)
-
-glimpse(misdrijven_2024_clean)
 ```
 
 ## 3.2 Generate necessary variables
 
 ### Variable 1
-Each municipality is categorized into one of three wealth groups based on average wealth per person: Low (below €300), Medium (between €300 and €500), or High (above €500). This is done for 2022, 2023, and 2024.
+
+Each municipality is categorized into one of three wealth groups based
+on average wealth per person: Low (below €300), Medium (between €300 and
+€500), or High (above €500). This is done for 2022, 2023, and 2024.
+
 ```{r gen_var1}
 summary(vermogen_2022_clean$vermogen_per_persoon)
 summary(vermogen_2023_clean$vermogen_per_persoon)
@@ -267,7 +251,6 @@ vermogen_2024_var1 <- vermogen_2024_clean %>%
     vermogen_per_persoon < 500  ~ "Medium",
     TRUE                        ~ "High"
   ))
-table(vermogen_2022_var1$vermogen_groep)
 ```
 
 ### Variable 2
@@ -298,10 +281,8 @@ misdrijven_2022_2023_clean <- left_join(
 
 ```
 
-Here we extend the same approach to all the three years. We join the
-household counts and crime figures for 2022,2023 and 2024 in one dataset
-(misdrijven_2022_2024_clean), which forms the basis for the
-visualisation that follows.
+Here we extend the same approach to all the three years and join the
+household counts and crime figures in one data set.
 
 ```{r}
 misdrijven_2022_2024_clean <- left_join(
@@ -488,17 +469,13 @@ This event analysis examines the impact of increased camera surveillance
 in the Netherlands in 2023 on crime rates. In recent years, many
 municipalities have expanded the use of surveillance cameras to improve
 public safety, deter criminal activity, and support law enforcement in
-identifying offenders (Koole, 2023).
-
-The year 2023 is considered the event year, and crime figures before and
-after the expansion of camera surveillance are compared. The expectation
-is that increased surveillance may reduce crime by increasing the
-perceived risk of being caught. However, it is also possible that
-certain crimes become more frequently reported or detected due to the
-presence of cameras. By analyzing crime data around this event, we can
-assess whether the increase in camera surveillance is associated with a
-significant change in crime levels in Dutch municipalities (Van de Ven,
-2023).
+identifying offenders (Koole, 2023). The expectation is that increased
+surveillance may reduce crime by increasing the perceived risk of being
+caught. However, it is also possible that certain crimes become more
+frequently reported or detected due to the presence of cameras. By
+analyzing crime data around this event, we can assess whether the
+increase in camera surveillance is associated with a significant change
+in crime levels in Dutch municipalities (Van de Ven, 2023).
 
 # Part 4 - Discussion
 
