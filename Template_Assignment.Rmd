@@ -196,7 +196,7 @@ vermogen_2024_clean <- vermogen_2024 %>%
 glimpse(vermogen_2024_clean)
 ```
 
-### Cleaned version 2022 2023 misdrijven
+### Misdrijven 2022 2023
 
 ```{r clean misdrijven_2022_2023}
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>% 
@@ -206,21 +206,24 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>%
     misdrijven_2022 = `Geregistreerde misdrijven...2`, 
     misdrijven_2023 = `Geregistreerde misdrijven...3` 
   )
+misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>% 
+  mutate(across(c(misdrijven_2022, misdrijven_2023), ~ as.numeric(str_replace(., ",", ".")))) %>% 
+  filter(!is.na(misdrijven_2022))
 
 glimpse(misdrijven_2022_2023_clean)
-view(misdrijven_2022_2023_clean)
+
 ```
 
 ### misdrijven 2024
 ```{r}
-misdrijven_2024 <- misdrijven_2024 %>%
+ misdrijven_2024 <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
 
 misdrijven_2024_clean <- misdrijven_2024 %>%
   mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
   rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
   rename(`gemeenten` = `Onderwerp`)
-
+glimpse(misdrijven_2024_clean)
 ```
 
 ## 3.2 Generate necessary variables
@@ -527,8 +530,17 @@ specific social problem.
 
 ## 4.1 Discuss your findings
 
-The findings of this report suggest that municipalities with lower average household wealth generally experience higher levels of registered crime per 1,000 households, with this pattern being most pronounced in low-income municipalities. This relationship is visible across multiple years (2022, 2023, 2024). Following the expansion of camera surveillance in 2023, the number of crimes per municipality decreased, particularly in municipalities with medium and high wealth levels.
-Several limitations should be acknowledged. The analysis relies solely on registered crimes per municipality, thereby leaving unreported crime out of the picture. Furthermore, the analysis covers a period of only three years, which limits the ability to distinguish long-term trends from short-term fluctuations. Finally, since no control group is available, the observed drop in crimes following the expansion of camera surveillance cannot be interpreted as causal evidence.
+The findings of this report suggest that municipalities with lower
+household wealth generally experience higher levels of registered crime
+per 1,000 households. This relationship is visible across multiple years
+(2022,2023,2024) and remains relatively stable over time.
+
+Some limitations should be acknowledged. First, the analysis only uses
+registered crimes and therefore does not capture unreported crime.
+Second, household wealth is only one measure of socioeconomic status and
+does not fully represent inequality. Finally, this analysis covers a
+period of only three years, which limits the ability to distinguish
+long-term trends from short-term fluctuations.
 
 # Part 5 - Reproducibility
 
