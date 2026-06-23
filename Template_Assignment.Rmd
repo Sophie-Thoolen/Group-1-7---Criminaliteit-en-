@@ -71,11 +71,11 @@ library(readr)
 
 misdrijven_2022_2023 <- read_delim("data/misdrijven_2022_2023.csv",
                           delim = ";", escape_double = FALSE,
-                          trim_ws = TRUE, skip = 3)
+                          trim_ws = TRUE, skip = 5)
 
 misdrijven_2024      <- read_delim("data/Misdrijven_2024.csv",
                           delim = ";", escape_double = FALSE,
-                          trim_ws = TRUE, skip = 3)
+                          trim_ws = TRUE, skip = 5)
 
 vermogen_2022        <- read_delim("data/vermogen_2022.csv",
                           delim = ";", escape_double = FALSE,
@@ -205,9 +205,9 @@ glimpse(vermogen_2024_clean)
 misdrijven_2022_2023_clean <- misdrijven_2022_2023 %>% 
   mutate(across(everything(), ~ na_if(., "."))) %>% 
   rename( 
-    gemeenten = `Onderwerp`, 
-    misdrijven_2022 = `Geregistreerde misdrijven...2`, 
-    misdrijven_2023 = `Geregistreerde misdrijven...3` 
+    gemeenten = `Regio's`, 
+    misdrijven_2022 = `aantal...2`, 
+    misdrijven_2023 = `aantal...3` 
   )
 misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>% 
   mutate(across(c(misdrijven_2022, misdrijven_2023), ~ as.numeric(str_replace(., ",", ".")))) %>% 
@@ -215,18 +215,19 @@ misdrijven_2022_2023_clean <- misdrijven_2022_2023_clean %>%
 
 glimpse(misdrijven_2022_2023_clean)
 
+
 ```
 
 ### Misdrijven 2024
 
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
-  mutate(`Geregistreerde misdrijven` = replace(`Geregistreerde misdrijven`, `Geregistreerde misdrijven` == ".", NA))
+  mutate(`Geregistreerde misdrijven` = replace(`aantal`, `aantal` == ".", NA))
 
 misdrijven_2024_clean <- misdrijven_2024 %>%
-  mutate(`Geregistreerde misdrijven` = na_if(`Geregistreerde misdrijven`, ".")) %>%
-  rename(`Misdrijven 2024` = `Geregistreerde misdrijven`) %>%
-  rename(`gemeenten` = `Onderwerp`)
+  mutate(`aantal` = na_if(`aantal`, ".")) %>%
+  rename(`Misdrijven 2024` = `aantal`) %>%
+  rename(`gemeenten` = `Regio's`)
 glimpse(misdrijven_2024_clean)
 ```
 
@@ -390,7 +391,6 @@ is an important variable in our hypothesis linking income inequality to
 crime. By showing where crime rates are the highest and lowest, the map
 makes a visual comparison with income inequality data at the same
 municipal level which will contribute to our social problem analysis.
-
 
 ## 3.5 Visualize sub-population variation
 
