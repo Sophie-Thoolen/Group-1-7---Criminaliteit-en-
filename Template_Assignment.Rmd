@@ -216,7 +216,6 @@ glimpse(misdrijven_2022_2023_clean)
 
 ```
 
-
 ### Misdrijven 2024
 ```{r}
  misdrijven_2024 <- misdrijven_2024 %>%
@@ -356,12 +355,7 @@ misdrijven_lang %>%
 
 ```
 
-This plot is relevant to our social problem because it visually shows
-the direct relationship between income level (low, medium, high) and
-recorded crime rates in Dutch municipalities from 2022-2024. This graph
-shows that the low-income group has a significantly higher number of
-crimes per 1,000 inhabitants, while the middle-income and high-income
-have significantly lower crime rates.
+This plot is relevant to our social problem because it visually shows the direct relationship between income level (low, medium, high) and recorded crime rates in Dutch municipalities from 2022-2024. This graph shows that the low-income group has a significantly higher number of crimes per 1,000 inhabitants, while the middle-income and high-income have significantly lower crime rates.
 
 ## 3.4 Visualize spatial variation
 
@@ -396,12 +390,7 @@ ggplot(kaart_data) +
   theme_void()
 ```
 
-This map is relevant to our social problem because it visualizes the
-geographic distribution of crime rates across Dutch municipalities. This
-is an important variable in our hypothesis linking income inequality to
-crime. By showing where crime rates are the highest and lowest, the map
-makes a visual comparison with income inequality data at the same
-municipal level which will contribute to our social problem analysis.
+This map is relevant to our social problem because it visualizes the geographic distribution of crime rates across Dutch municipalities. This is an important variable in our hypothesis linking income inequality to crime. By showing where crime rates are the highest and lowest, the map makes a visual comparison with income inequality data at the same municipal level which will contribute to our social problem analysis.
 
 ## 3.5 Visualize sub-population variation
 
@@ -419,7 +408,10 @@ df_merged <- vermogen_gemiddeld %>%
   )
 df_merged <- df_merged %>%
   mutate(vermogen_groep = factor(vermogen_groep, levels = c("Laag", "Gemiddeld", "Hoog")))
-ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
+df_merged_clean <- df_merged %>% 
+  filter(!is.na(vermogen_groep), 
+         !is.na(misdrijven_per_1000_2024))
+ggplot(df_merged_clean, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = vermogen_groep)) +
   geom_boxplot(colour = "darkblue", width = 0.5) +
   scale_fill_manual(values = c("Laag" = "lightpink", "Gemiddeld" = "lightyellow", "Hoog" = "lightgreen")) +
   labs(
@@ -432,16 +424,7 @@ ggplot(df_merged, aes(x = vermogen_groep, y = misdrijven_per_1000_2024, fill = v
   
 ```
 
-This boxplot is relevant to our social problem because it directly
-compares crime rates across municipalities grouped by wealth level (low,
-medium, high). This allows us to see whether lower wealth groups are
-associated with a higher crime rate compared to the medium and high
-wealth groups. This supports our hypothesis that different wealth groups
-are linked to a different amount of crime.
-
-The NA group represents municipalities where wealth information is not
-available, so this information is not included in the comparison between
-wealth levels.
+This boxplot is relevant to our social problem because it directly compares crime rates across municipalities grouped by wealth level (low, medium, high). This allows us to see whether lower wealth groups are associated with a higher crime rate compared to the medium and high wealth groups. This supports our hypothesis that different wealth groups are linked to a different amount of crime.
 
 ## 3.6 Event analysis
 
